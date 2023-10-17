@@ -1,0 +1,26 @@
+name: NFL Big Data Bowl CI/CD
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  CICD:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: >
+          pip3 install --upgrade pip
+          && pip3 install -r requirements.txt
+      - name: Run Python unit tests
+        run: pytest tests/unit
+      - name: Check Python style
+        run: black --check nfl_bdb tests
+      - name: Check Python import order
+        run: isort --check-only -rc nfl_bdb tests
