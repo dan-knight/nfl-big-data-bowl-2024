@@ -18,5 +18,7 @@ jobs:
         run: >
           pip3 install --upgrade pip
           && pip3 install -r requirements.txt
-      - name: Lint Python
+      - name: Check Python style
         run: black --check nfl_bdb tests
+      - name: Check Python import order
+        run: isort --check-only -rc nfl_bdb tests
