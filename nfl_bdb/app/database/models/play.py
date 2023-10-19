@@ -1,6 +1,9 @@
-from sqlalchemy.orm import mapped_column, Mapped
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import mapped_column, relationship, Mapped
 
 from nfl_bdb.app.database.models import Base
+from nfl_bdb.app.database.models.team import Team
+from nfl_bdb.app.database.models.player import Player
 
 
 class Play(Base):
@@ -9,19 +12,16 @@ class Play(Base):
     play_id: Mapped[int] = mapped_column(primary_key=True)
     description: Mapped[str] = mapped_column()
 
-    # ball_carrier_id
-    # ball_carrier_name (NO)
+    ball_carrier_id: Mapped[int] = mapped_column(ForeignKey("players.player_id"))
 
     quarter: Mapped[int] = mapped_column()
     game_time: Mapped[int] = mapped_column()
     down: Mapped[int] = mapped_column()
 
-    # offense_team_id
-    # defense_team_id
+    offensive_team_id: Mapped[int] = mapped_column(ForeignKey("teams.team_id"))
 
-    # yard_line_side
-    # yard_line_team_id
-    # team_yard_line
+    los: Mapped[int] = mapped_column()
+    los_team_id: Mapped[int] = mapped_column(ForeignKey("teams.team_id"))
     yard_line: Mapped[int] = mapped_column()  # "absolute" yard line
 
     yards_to_go: Mapped[int] = mapped_column()
@@ -51,8 +51,15 @@ class Play(Base):
     expected_points: Mapped[float] = mapped_column()
     expected_points_added: Mapped[float] = mapped_column()
 
-    # foul_1 NULL
-    # foul_2 NULL
+    foul_1: Mapped[str] = mapped_column(nullable=True)
+    foul_2: Mapped[str] = mapped_column(nullable=True)
 
-    # foul_player_id_1 NULL
-    # foul_player_id_2 NULL
+    foul_player_id_1: Mapped[Player] = mapped_column(ForeignKey("players.player_id"), nullable=True)
+    foul_player_id_2: Mapped[Player] = mapped_column(ForeignKey("players.player_id"), nullable=True)
+    
+    ball_carrier: Mapped[Player] = relationship(Player, foreign_keys=[ball_carrier_id])
+    foul_player_1: Mapped[Player] = relationship(Player, foreign_keys=[foul_player_id_1])
+    foul_player_2: Mapped[Player] = relationship(Player, foreign_keys=[foul_player_id_2])
+    
+    offensive_team: Mapped[Team] = relationship(Team, foreign_keys=[offensive_team_id])
+    los_team: Mapped[Team] = relationship(Team, foreign_keys=[los_team_id])

@@ -1,13 +1,18 @@
 import datetime
-from sqlalchemy.orm import mapped_column, Mapped
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import mapped_column, relationship, Mapped
 
 from nfl_bdb.app.database.models import Base
+from nfl_bdb.app.database.models.play import Play
+from nfl_bdb.app.database.models.player import Player
 
 
 class TrackingPoint(Base):
     __tablename__ = "tracking"
 
     tracking_id: Mapped[int] = mapped_column(primary_key=True)
+    player_id: Mapped[int] = mapped_column(ForeignKey("players.player_id"))
+    play_id: Mapped[int] = mapped_column(ForeignKey("plays.play_id"))
     frame: Mapped[int] = mapped_column()
     
     x: Mapped[float] = mapped_column()
@@ -24,4 +29,8 @@ class TrackingPoint(Base):
     jersey: Mapped[int] = mapped_column()
 
     event: Mapped[str] = mapped_column(nullable=True)
+
+    player: Mapped[Player] = relationship()
+    play: Mapped[Play] = relationship()
+    
     
