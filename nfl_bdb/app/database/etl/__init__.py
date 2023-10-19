@@ -1,6 +1,8 @@
 import csv
 from pathlib import Path
-from typing import Dict, Iterable
+from typing import Dict, Iterable, List
+
+from nfl_bdb.app.database.models import Base
 
 
 def load_csv(path: Path) -> Iterable[Dict[str, str]]:
@@ -9,3 +11,6 @@ def load_csv(path: Path) -> Iterable[Dict[str, str]]:
 
     return reader
 
+
+def import_nfl_data(data_path: Path) -> List[Base]:
+    ...
