@@ -1,14 +1,15 @@
 from typing import Optional
+
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import mapped_column, relationship, Mapped
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from nfl_bdb.app.database.models import Base
-from nfl_bdb.app.database.models.team import Team
 from nfl_bdb.app.database.models.player import Player
+from nfl_bdb.app.database.models.team import Team
 
 
 class Play(Base):
-    __tablename__ = 'plays'
+    __tablename__ = "plays"
 
     play_id: Mapped[int] = mapped_column(primary_key=True)
     description: Mapped[str] = mapped_column()
@@ -55,12 +56,20 @@ class Play(Base):
     foul_1: Mapped[Optional[str]] = mapped_column(nullable=True)
     foul_2: Mapped[Optional[str]] = mapped_column(nullable=True)
 
-    foul_player_id_1: Mapped[Optional[int]] = mapped_column(ForeignKey("players.player_id"), nullable=True)
-    foul_player_id_2: Mapped[Optional[int]] = mapped_column(ForeignKey("players.player_id"), nullable=True)
-    
+    foul_player_id_1: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("players.player_id"), nullable=True
+    )
+    foul_player_id_2: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("players.player_id"), nullable=True
+    )
+
     ball_carrier: Mapped[Player] = relationship(Player, foreign_keys=[ball_carrier_id])
-    foul_player_1: Mapped[Optional[Player]] = relationship(Player, foreign_keys=[foul_player_id_1])
-    foul_player_2: Mapped[Optional[Player]] = relationship(Player, foreign_keys=[foul_player_id_2])
-    
+    foul_player_1: Mapped[Optional[Player]] = relationship(
+        Player, foreign_keys=[foul_player_id_1]
+    )
+    foul_player_2: Mapped[Optional[Player]] = relationship(
+        Player, foreign_keys=[foul_player_id_2]
+    )
+
     offensive_team: Mapped[Team] = relationship(Team, foreign_keys=[offensive_team_id])
     los_team: Mapped[Team] = relationship(Team, foreign_keys=[los_team_id])
