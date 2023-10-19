@@ -1,4 +1,5 @@
 import datetime
+from typing import Optional
 from sqlalchemy.orm import Mapped, mapped_column
 from nfl_bdb.app.database.models import Base
 
@@ -12,4 +13,4 @@ class Player(Base):
     height: Mapped[int] = mapped_column()
     weight: Mapped[int] = mapped_column()
     birth_date: Mapped[datetime.date] = mapped_column()
-    college: Mapped[str] = mapped_column(nullable=True)
+    college: Mapped[Optional[str]] = mapped_column(nullable=True)

@@ -1,4 +1,5 @@
 import datetime
+from typing import Optional
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import mapped_column, relationship, Mapped
 
@@ -28,7 +29,7 @@ class TrackingPoint(Base):
     timestamp: Mapped[datetime.datetime] = mapped_column()
     jersey: Mapped[int] = mapped_column()
 
-    event: Mapped[str] = mapped_column(nullable=True)
+    event: Mapped[Optional[str]] = mapped_column(nullable=True)
 
     player: Mapped[Player] = relationship()
     play: Mapped[Play] = relationship()
