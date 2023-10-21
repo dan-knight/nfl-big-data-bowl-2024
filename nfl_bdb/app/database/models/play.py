@@ -42,7 +42,7 @@ class Play(Base):
     penalty_yards: Mapped[Optional[int]] = mapped_column(nullable=True)
     nullified_by_penalty: Mapped[bool] = mapped_column()
 
-    pass_probability: Mapped[float] = mapped_column()
+    pass_probability: Mapped[Optional[float]] = mapped_column(nullable=True)
 
     home_win_probability: Mapped[float] = mapped_column()
     away_win_probability: Mapped[float] = mapped_column()
