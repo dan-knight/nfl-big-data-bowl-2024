@@ -1,5 +1,9 @@
 from typing import Any, Mapping
-from marshmallow.fields import Field, String, Integer, Float 
+from marshmallow.fields import Field, String, Integer, Float, Date
+
+
+DATE_FORMAT: str = "%d/%m/%Y"
+TIME_FORMAT: str = "%H:%M:%S"
 
 
 class _NAField(Field):
@@ -26,4 +30,8 @@ class NAInteger(_NAField, Integer):
  
 
 class NAFloat(_NAField, Float):
+    pass
+
+
+class NADate(_NAField, Date):
     pass

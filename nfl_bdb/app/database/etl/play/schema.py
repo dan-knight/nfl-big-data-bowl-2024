@@ -57,7 +57,7 @@ class CSVPlaySchema(Schema):
     defensive_team = fields.String(required=True, data_key="defensiveTeam")
     yard_line_side = fields.String(required=True, data_key="yardLineSide")
     yard_line_number = fields.Integer(required=True, data_key="yardLineNumber")
-    game_clock = fields.String(required=True, data_key="gameClock")
+    game_clock = fields.Time(format="%M:%S", required=True, data_key="gameClock")
     pre_snap_home_score = fields.Integer(required=True, data_key="preSnapHomeScore")
     pre_snap_away_score = fields.Integer(required=True, data_key="preSnapVisitorScore")
     pass_result = fields.String(data_key="passResult")
