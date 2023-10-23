@@ -1,8 +1,9 @@
 from dataclasses import dataclass
-from typing import Optional
-from marshmallow import Schema, fields
+from typing import Any, Mapping, Optional
+from marshmallow import fields, post_load
 
 from nfl_bdb.app.database.etl import fields as etl_fields
+from nfl_bdb.app.database.etl.schema import GenericSchema
 
 
 @dataclass(frozen=True)
@@ -44,7 +45,7 @@ class CSVPlay:
     foul_player_id_2: Optional[int]
 
 
-class CSVPlaySchema(Schema):
+class CSVPlaySchema(GenericSchema[CSVPlay]):
     play_id = fields.Integer(required=True, data_key="playId")
     game_id = fields.Integer(required=True, data_key="gameId")
     ball_carrier_id = fields.Integer(required=True, data_key="ballCarrierId")
@@ -80,3 +81,11 @@ class CSVPlaySchema(Schema):
     foul_name_2 = etl_fields.NAString(required=True, data_key="foulName2")
     foul_player_id_1 = etl_fields.NAInteger(required=True, data_key="foulNflId1")
     foul_player_id_2 = etl_fields.NAInteger(required=True, data_key="foulNflId2")
+
+    @post_load
+    def _deserialize_play(
+        self,
+        data: Mapping[str, Any],
+        **kwargs: Mapping[str, Any]
+    ) -> CSVPlay:
+        return CSVPlay(**data)

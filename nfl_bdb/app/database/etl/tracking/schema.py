@@ -1,8 +1,9 @@
 from dataclasses import dataclass
-from typing import Optional
-from marshmallow import Schema, fields
+from typing import Any, Mapping, Optional
+from marshmallow import fields, post_load
 
 from nfl_bdb.app.database.etl import fields as etl_fields
+from nfl_bdb.app.database.etl.schema import GenericSchema
 
 
 @dataclass(frozen=True)
@@ -26,7 +27,7 @@ class CSVTracking:
     event: Optional[str]
 
 
-class CSVTrackingSchema(Schema):
+class CSVTrackingSchema(GenericSchema[CSVTracking]):
     game_id = fields.Integer(required=True, data_key="gameId")
     play_id = fields.Integer(required=True, data_key="playId")
     player_id = fields.Integer(required=True, data_key="nflId")
@@ -44,3 +45,11 @@ class CSVTrackingSchema(Schema):
     orientation = fields.Float(required=True, data_key="o")
     direction = fields.Float(required=True, data_key="dir")
     event = etl_fields.NAString(required=True)
+
+    @post_load
+    def _deserialize_tracking(
+        self,
+        data: Mapping[str, Any],
+        **kwargs: Mapping[str, Any]
+    ) -> CSVTracking:
+        return CSVTracking(**data)
