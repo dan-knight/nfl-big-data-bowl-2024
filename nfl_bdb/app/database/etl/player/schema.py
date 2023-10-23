@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from typing import Optional
 from marshmallow import Schema, fields
 
+from nfl_bdb.app.database.etl import fields as etl_fields
+
 
 @dataclass(frozen=True)
 class CSVPlayer:
@@ -19,6 +21,6 @@ class CSVPlayerSchema(Schema):
     name = fields.String(required=True, data_key="displayName")
     height = fields.String(required=True)
     weight = fields.Integer(required=True)
-    birth_date = fields.String(data_key="birthDate")
+    birth_date = etl_fields.NAString(required=True, data_key="birthDate")
     position = fields.String(required=True)
     college_name = fields.String(required=True, data_key="collegeName")
