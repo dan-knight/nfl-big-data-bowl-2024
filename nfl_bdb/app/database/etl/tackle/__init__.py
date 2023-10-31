@@ -11,5 +11,5 @@ class TackleFactory(ETLFactory):
             tackled=csv_tackle.tackle,
             assist=csv_tackle.assist,
             forced_fumble=csv_tackle.assist,
-            missed=csv_tackle.pff_missed_tackle
+            missed=csv_tackle.pff_missed_tackle,
         )

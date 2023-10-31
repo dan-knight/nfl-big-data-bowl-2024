@@ -23,20 +23,15 @@ class TrackingFactory(ETLFactory):
             orientation=csv_tracking.orientation,
             distance_traveled=csv_tracking.distance,
             jersey=csv_tracking.jersey_number,
-            event=csv_tracking.event
+            event=csv_tracking.event,
         )
 
     def _parse_play_direction(self, csv_direction: str) -> bool:
-        direction_index: Dict[str, bool] = {
-            "right": True,
-            "left": False
-        }
+        direction_index: Dict[str, bool] = {"right": True, "left": False}
 
         play_direction: Optional[bool] = direction_index.get(csv_direction)
 
         if play_direction is None:
-            raise ValueError(f"Invalid play direction \"{csv_direction}\"")
+            raise ValueError(f'Invalid play direction "{csv_direction}"')
 
         return play_direction
-
-    

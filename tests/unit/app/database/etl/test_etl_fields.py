@@ -1,6 +1,6 @@
 import datetime
-from typing import Any, Dict, cast
 import unittest
+from typing import Any, cast, Dict
 
 from marshmallow import Schema
 
@@ -14,7 +14,7 @@ class TestETLFields(unittest.TestCase):
 
         value: int = 10
         key: str = "test_value"
-        
+
         schema = TestSchema()
         result = cast(Dict[str, Any], schema.load({key: value}))
 
@@ -29,9 +29,10 @@ class TestETLFields(unittest.TestCase):
         result = cast(Dict[str, Any], schema.load({key: "NA"}))
 
         assert result.get(key) is None
-    
+
     def test__na_date_field__allows_valid_date(self):
         date_format: str = DATE_FORMAT
+
         class TestSchema(Schema):
             test_value = NADate(format=date_format, required=True)
 
@@ -44,6 +45,7 @@ class TestETLFields(unittest.TestCase):
 
     def test__na_date_field__allows_required_na_date(self):
         date_format: str = DATE_FORMAT
+
         class TestSchema(Schema):
             test_value = NADate(format=date_format)
 

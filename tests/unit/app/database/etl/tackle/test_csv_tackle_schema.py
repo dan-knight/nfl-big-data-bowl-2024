@@ -1,5 +1,5 @@
-from typing import Any, Dict
 import unittest
+from typing import Any, Dict
 
 from nfl_bdb.app.database.etl.tackle.schema import CSVTackle, CSVTackleSchema
 
@@ -13,7 +13,7 @@ class TestCSVTackleSchema(unittest.TestCase):
             "tackle": csv_tackle.tackle,
             "assist": csv_tackle.assist,
             "forcedFumble": csv_tackle.forced_fumble,
-            "pff_missedTackle": csv_tackle.pff_missed_tackle
+            "pff_missedTackle": csv_tackle.pff_missed_tackle,
         }
 
         return result
@@ -26,7 +26,7 @@ class TestCSVTackleSchema(unittest.TestCase):
             tackle=True,
             assist=True,
             forced_fumble=False,
-            pff_missed_tackle=False
+            pff_missed_tackle=False,
         )
 
         tackle_dict: Dict[str, Any] = self._create_csv_tackle_dict(tackle)

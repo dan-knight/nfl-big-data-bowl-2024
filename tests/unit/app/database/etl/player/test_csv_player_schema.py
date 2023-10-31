@@ -1,6 +1,7 @@
 import datetime
-from typing import Any, Dict
 import unittest
+from typing import Any, Dict
+
 from nfl_bdb.app.database.etl.fields import DATE_FORMAT
 from nfl_bdb.app.database.etl.player.schema import CSVPlayer, CSVPlayerSchema
 
@@ -9,7 +10,7 @@ class TestCSVPlayerSchema(unittest.TestCase):
     def _create_csv_player_dict(self, csv_player: CSVPlayer) -> Dict[str, Any]:
         birth_date: str = (
             csv_player.birth_date.strftime(DATE_FORMAT)
-            if csv_player.birth_date is not None 
+            if csv_player.birth_date is not None
             else "NA"
         )
 
@@ -20,7 +21,7 @@ class TestCSVPlayerSchema(unittest.TestCase):
             "height": csv_player.height,
             "weight": csv_player.weight,
             "birthDate": birth_date,
-            "collegeName": csv_player.college_name
+            "collegeName": csv_player.college_name,
         }
 
         return result
@@ -33,7 +34,7 @@ class TestCSVPlayerSchema(unittest.TestCase):
             height="5-11",
             weight=186,
             birth_date=datetime.date(1990, 10, 2),
-            college_name="College"
+            college_name="College",
         )
 
         player_dict: Dict[str, Any] = self._create_csv_player_dict(player)
@@ -42,7 +43,7 @@ class TestCSVPlayerSchema(unittest.TestCase):
         result = schema.load(player_dict)
 
         assert result == player
-    
+
     def test__player_schema__handles_na_date(self):
         player = CSVPlayer(
             player_id=10,
@@ -51,7 +52,7 @@ class TestCSVPlayerSchema(unittest.TestCase):
             height="5-11",
             weight=186,
             birth_date=None,
-            college_name="College"
+            college_name="College",
         )
 
         player_dict: Dict[str, Any] = self._create_csv_player_dict(player)

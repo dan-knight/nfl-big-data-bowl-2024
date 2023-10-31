@@ -1,6 +1,6 @@
 from typing import Any, Mapping
-from marshmallow.fields import Field, String, Integer, Float, Date
 
+from marshmallow.fields import Date, Field, Float, Integer, String
 
 DATE_FORMAT: str = "%Y-%m-%d"
 TIME_FORMAT: str = "%H:%M:%S"
@@ -17,9 +17,10 @@ class NAField(Field):
     ):
         if value == "NA":
             return None
-        
-        return super()._deserialize(value, attr, data, **kwargs)  # pyright: ignore[reportUnknownMemberType]
-           
+
+        return super()._deserialize(
+            value, attr, data, **kwargs
+        )  # pyright: ignore[reportUnknownMemberType]
 
 
 class NAString(NAField, String):
@@ -28,7 +29,7 @@ class NAString(NAField, String):
 
 class NAInteger(NAField, Integer):
     pass
- 
+
 
 class NAFloat(NAField, Float):
     pass

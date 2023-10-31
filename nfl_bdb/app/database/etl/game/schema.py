@@ -1,6 +1,7 @@
-from dataclasses import dataclass
 import datetime
+from dataclasses import dataclass
 from typing import Any, Mapping
+
 from marshmallow import fields, post_load
 
 from nfl_bdb.app.database.etl.fields import DATE_FORMAT, TIME_FORMAT
@@ -25,7 +26,9 @@ class CSVGameSchema(GenericSchema[CSVGame]):
     season = fields.Integer(required=True)
     week = fields.Integer(required=True)
     game_date = fields.Date(format=DATE_FORMAT, required=True, data_key="gameDate")
-    game_time = fields.Time(format=TIME_FORMAT, required=True, data_key="gameTimeEastern")
+    game_time = fields.Time(
+        format=TIME_FORMAT, required=True, data_key="gameTimeEastern"
+    )
     home_team = fields.String(required=True, data_key="homeTeamAbbr")
     away_team = fields.String(required=True, data_key="visitorTeamAbbr")
     home_score = fields.Integer(required=True, data_key="homeFinalScore")
@@ -33,8 +36,6 @@ class CSVGameSchema(GenericSchema[CSVGame]):
 
     @post_load
     def _deserialize_game(
-        self,
-        data: Mapping[str, Any],
-        **kwargs: Mapping[str, Any]
+        self, data: Mapping[str, Any], **kwargs: Mapping[str, Any]
     ) -> CSVGame:
         return CSVGame(**data)

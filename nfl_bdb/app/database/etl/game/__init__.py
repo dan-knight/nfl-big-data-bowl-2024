@@ -21,5 +21,5 @@ class GameFactory(ETLFactory, FactoryTeamIndex):
             home_team=home_team,
             away_team=away_team,
             home_score=csv_game.home_score,
-            away_score=csv_game.away_score
+            away_score=csv_game.away_score,
         )

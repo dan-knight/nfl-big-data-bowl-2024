@@ -1,6 +1,7 @@
 import datetime
 from dataclasses import dataclass
 from typing import Any, Mapping, Optional
+
 from marshmallow import fields, post_load
 
 from nfl_bdb.app.database.etl import fields as etl_fields
@@ -65,17 +66,29 @@ class CSVPlaySchema(GenericSchema[CSVPlay]):
     pass_result = fields.String(data_key="passResult", load_default=None)
     pass_length = etl_fields.NAInteger(required=True, data_key="passLength")
     penalty_yards = etl_fields.NAInteger(required=True, data_key="penaltyYards")
-    pre_penalty_play_result = fields.Integer(required=True, data_key="prePenaltyPlayResult")
+    pre_penalty_play_result = fields.Integer(
+        required=True, data_key="prePenaltyPlayResult"
+    )
     play_result = fields.Integer(required=True, data_key="playResult")
-    play_nullified_by_penalty = fields.Boolean(required=True, data_key="playNullifiedByPenalty")
+    play_nullified_by_penalty = fields.Boolean(
+        required=True, data_key="playNullifiedByPenalty"
+    )
     absolute_yard_line = fields.Integer(required=True, data_key="absoluteYardLine")
     offense_formation = fields.String(required=True, data_key="offenseFormation")
     defenders_in_the_box = fields.Integer(required=True, data_key="defendersInTheBox")
     pass_probability = etl_fields.NAFloat(required=True, data_key="passProbability")
-    pre_snap_home_team_win_probability = fields.Float(required=True, data_key="preSnapHomeTeamWinProbability")
-    pre_snap_away_team_win_probability = fields.Float(required=True, data_key="preSnapVisitorTeamWinProbability")
-    home_team_win_probability_added = fields.Float(required=True, data_key="homeTeamWinProbabilityAdded")
-    away_team_win_probability_added = fields.Float(required=True, data_key="visitorTeamWinProbabilityAdded")
+    pre_snap_home_team_win_probability = fields.Float(
+        required=True, data_key="preSnapHomeTeamWinProbability"
+    )
+    pre_snap_away_team_win_probability = fields.Float(
+        required=True, data_key="preSnapVisitorTeamWinProbability"
+    )
+    home_team_win_probability_added = fields.Float(
+        required=True, data_key="homeTeamWinProbabilityAdded"
+    )
+    away_team_win_probability_added = fields.Float(
+        required=True, data_key="visitorTeamWinProbabilityAdded"
+    )
     expected_points = fields.Float(required=True, data_key="expectedPoints")
     expected_points_added = fields.Float(required=True, data_key="expectedPointsAdded")
     foul_name_1 = etl_fields.NAString(required=True, data_key="foulName1")
@@ -85,9 +98,6 @@ class CSVPlaySchema(GenericSchema[CSVPlay]):
 
     @post_load
     def _deserialize_play(
-        self,
-        data: Mapping[str, Any],
-        **kwargs: Mapping[str, Any]
+        self, data: Mapping[str, Any], **kwargs: Mapping[str, Any]
     ) -> CSVPlay:
-        
         return CSVPlay(**data)

@@ -16,16 +16,16 @@ class PlayerFactory(ETLFactory):
         )
 
         db_player = DBPlayer(
-                player_id=csv_player.player_id,
-                name=csv_player.name,
-                position=csv_player.position,
-                height=height,
-                weight=csv_player.weight,
-                birth_date=birth_date,
-                college=csv_player.college_name
+            player_id=csv_player.player_id,
+            name=csv_player.name,
+            position=csv_player.position,
+            height=height,
+            weight=csv_player.weight,
+            birth_date=birth_date,
+            college=csv_player.college_name,
         )
 
         return db_player
-    
+
     def _parse_csv_height(self, csv_height: str) -> int:
         ...

@@ -1,6 +1,7 @@
 import datetime
-from typing import Any, Dict
 import unittest
+from typing import Any, Dict
+
 from nfl_bdb.app.database.etl.fields import DATE_FORMAT, TIME_FORMAT
 from nfl_bdb.app.database.etl.game.schema import CSVGame, CSVGameSchema
 
@@ -9,7 +10,7 @@ class TestCSVGameSchema(unittest.TestCase):
     def _create_csv_game_dict(self, csv_game: CSVGame) -> Dict[str, Any]:
         game_date: str = csv_game.game_date.strftime(DATE_FORMAT)
         game_time: str = csv_game.game_time.strftime(TIME_FORMAT)
-        
+
         result: Dict[str, Any] = {
             "gameId": csv_game.game_id,
             "season": csv_game.season,
@@ -34,7 +35,7 @@ class TestCSVGameSchema(unittest.TestCase):
             home_team="HOME",
             away_team="AWAY",
             home_score=20,
-            away_score=17
+            away_score=17,
         )
 
         game_dict: Dict[str, Any] = self._create_csv_game_dict(game)

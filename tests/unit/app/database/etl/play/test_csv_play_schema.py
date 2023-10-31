@@ -1,6 +1,6 @@
 import datetime
-from typing import Any, Dict
 import unittest
+from typing import Any, Dict
 
 from nfl_bdb.app.database.etl.play.schema import CSVPlay, CSVPlaySchema
 
@@ -8,14 +8,28 @@ from nfl_bdb.app.database.etl.play.schema import CSVPlay, CSVPlaySchema
 class TestCSVPlaySchema(unittest.TestCase):
     def _create_csv_play_dict(self, csv_play: CSVPlay) -> Dict[str, Any]:
         game_clock: str = csv_play.game_clock.strftime("%-M:%S")
-        pass_length: str | int = csv_play.pass_length if csv_play.pass_length is not None else "NA"
-        penalty_yards: str | int = csv_play.penalty_yards if csv_play.penalty_yards is not None else "NA"
-        pass_probability: str | float = csv_play.pass_probability if csv_play.pass_probability is not None else "NA"
-        
-        foul_name_1: str = csv_play.foul_name_1 if csv_play.foul_name_1 is not None else "NA"
-        foul_name_2: str = csv_play.foul_name_2 if csv_play.foul_name_2 is not None else "NA"
-        foul_id_1: int | str = csv_play.foul_player_id_1 if csv_play.foul_player_id_1 is not None else "NA"
-        foul_id_2: int | str = csv_play.foul_player_id_2 if csv_play.foul_player_id_2 is not None else "NA"
+        pass_length: str | int = (
+            csv_play.pass_length if csv_play.pass_length is not None else "NA"
+        )
+        penalty_yards: str | int = (
+            csv_play.penalty_yards if csv_play.penalty_yards is not None else "NA"
+        )
+        pass_probability: str | float = (
+            csv_play.pass_probability if csv_play.pass_probability is not None else "NA"
+        )
+
+        foul_name_1: str = (
+            csv_play.foul_name_1 if csv_play.foul_name_1 is not None else "NA"
+        )
+        foul_name_2: str = (
+            csv_play.foul_name_2 if csv_play.foul_name_2 is not None else "NA"
+        )
+        foul_id_1: int | str = (
+            csv_play.foul_player_id_1 if csv_play.foul_player_id_1 is not None else "NA"
+        )
+        foul_id_2: int | str = (
+            csv_play.foul_player_id_2 if csv_play.foul_player_id_2 is not None else "NA"
+        )
 
         result: Dict[str, Any] = {
             "playId": csv_play.play_id,
@@ -52,7 +66,7 @@ class TestCSVPlaySchema(unittest.TestCase):
             "foulName1": foul_name_1,
             "foulName2": foul_name_2,
             "foulNflId1": foul_id_1,
-            "foulNflId2": foul_id_2
+            "foulNflId2": foul_id_2,
         }
 
         return result
@@ -93,7 +107,7 @@ class TestCSVPlaySchema(unittest.TestCase):
             foul_name_1="Offensive Holding",
             foul_name_2="Unnecessary Roughness",
             foul_player_id_1=19,
-            foul_player_id_2=90
+            foul_player_id_2=90,
         )
 
         play_dict: Dict[str, Any] = self._create_csv_play_dict(play)
@@ -102,7 +116,7 @@ class TestCSVPlaySchema(unittest.TestCase):
         result = schema.load(play_dict)
 
         assert result == play
-    
+
     def test__play_schema__handles_null_pass_result(self):
         play = CSVPlay(
             play_id=1902,
@@ -139,16 +153,16 @@ class TestCSVPlaySchema(unittest.TestCase):
             foul_name_1="Offensive Holding",
             foul_name_2="Unnecessary Roughness",
             foul_player_id_1=19,
-            foul_player_id_2=90
+            foul_player_id_2=90,
         )
-        
+
         play_dict: Dict[str, Any] = self._create_csv_play_dict(play)
 
         schema = CSVPlaySchema()
         result = schema.load(play_dict)
 
         assert result == play
-    
+
     def test__play_schema__handles_na_pass_length(self):
         play = CSVPlay(
             play_id=1902,
@@ -185,9 +199,9 @@ class TestCSVPlaySchema(unittest.TestCase):
             foul_name_1="Offensive Holding",
             foul_name_2="Unnecessary Roughness",
             foul_player_id_1=19,
-            foul_player_id_2=90
+            foul_player_id_2=90,
         )
-        
+
         play_dict: Dict[str, Any] = self._create_csv_play_dict(play)
 
         schema = CSVPlaySchema()
@@ -231,9 +245,9 @@ class TestCSVPlaySchema(unittest.TestCase):
             foul_name_1="Offensive Holding",
             foul_name_2="Unnecessary Roughness",
             foul_player_id_1=19,
-            foul_player_id_2=90
+            foul_player_id_2=90,
         )
-        
+
         play_dict: Dict[str, Any] = self._create_csv_play_dict(play)
 
         schema = CSVPlaySchema()
@@ -277,9 +291,9 @@ class TestCSVPlaySchema(unittest.TestCase):
             foul_name_1="Offensive Holding",
             foul_name_2="Unnecessary Roughness",
             foul_player_id_1=19,
-            foul_player_id_2=90
+            foul_player_id_2=90,
         )
-        
+
         play_dict: Dict[str, Any] = self._create_csv_play_dict(play)
 
         schema = CSVPlaySchema()
@@ -323,9 +337,9 @@ class TestCSVPlaySchema(unittest.TestCase):
             foul_name_1=None,
             foul_name_2="Unnecessary Roughness",
             foul_player_id_1=19,
-            foul_player_id_2=90
+            foul_player_id_2=90,
         )
-        
+
         play_dict: Dict[str, Any] = self._create_csv_play_dict(play)
 
         schema = CSVPlaySchema()
@@ -369,16 +383,16 @@ class TestCSVPlaySchema(unittest.TestCase):
             foul_name_1="Offensive Holding",
             foul_name_2=None,
             foul_player_id_1=19,
-            foul_player_id_2=90
+            foul_player_id_2=90,
         )
-        
+
         play_dict: Dict[str, Any] = self._create_csv_play_dict(play)
 
         schema = CSVPlaySchema()
         result = schema.load(play_dict)
 
         assert result == play
-    
+
     def test__play_schema__handles_na_foul_player_id_1(self):
         play = CSVPlay(
             play_id=1902,
@@ -415,16 +429,16 @@ class TestCSVPlaySchema(unittest.TestCase):
             foul_name_1="Offensive Holding",
             foul_name_2="Unnecessary Roughness",
             foul_player_id_1=None,
-            foul_player_id_2=90
+            foul_player_id_2=90,
         )
-        
+
         play_dict: Dict[str, Any] = self._create_csv_play_dict(play)
 
         schema = CSVPlaySchema()
         result = schema.load(play_dict)
 
         assert result == play
-    
+
     def test__play_schema__handles_na_foul_player_id_2(self):
         play = CSVPlay(
             play_id=1902,
@@ -461,9 +475,9 @@ class TestCSVPlaySchema(unittest.TestCase):
             foul_name_1="Offensive Holding",
             foul_name_2="Unnecessary Roughness",
             foul_player_id_1=81,
-            foul_player_id_2=None
+            foul_player_id_2=None,
         )
-        
+
         play_dict: Dict[str, Any] = self._create_csv_play_dict(play)
 
         schema = CSVPlaySchema()

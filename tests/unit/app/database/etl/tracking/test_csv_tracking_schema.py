@@ -1,18 +1,32 @@
 import datetime
-from typing import Dict, Any
 import unittest
+from typing import Any, Dict
+
 from nfl_bdb.app.database.etl.fields import DATETIME_FORMAT
-from nfl_bdb.app.database.etl.tracking.schema import CSVTracking, CSVTrackingSchema
+from nfl_bdb.app.database.etl.tracking.schema import (CSVTracking,
+                                                      CSVTrackingSchema)
 
 
 class TestCSVTrackingSchema(unittest.TestCase):
     def _create_csv_tracking_dict(self, csv_tracking: CSVTracking) -> Dict[str, Any]:
-        player_id: int | str = csv_tracking.player_id if csv_tracking.player_id is not None else "NA"
+        player_id: int | str = (
+            csv_tracking.player_id if csv_tracking.player_id is not None else "NA"
+        )
         tracking_time: str = csv_tracking.time.strftime(DATETIME_FORMAT)
-        jersey_number: str = csv_tracking.jersey_number if csv_tracking.jersey_number is not None else "NA"
-        orientation: float | str = csv_tracking.orientation if csv_tracking.orientation is not None else "NA"
-        direction: float | str = csv_tracking.direction if csv_tracking.direction is not None else "NA"
-        event: float | str = csv_tracking.event if csv_tracking.event is not None else "NA"
+        jersey_number: str = (
+            csv_tracking.jersey_number
+            if csv_tracking.jersey_number is not None
+            else "NA"
+        )
+        orientation: float | str = (
+            csv_tracking.orientation if csv_tracking.orientation is not None else "NA"
+        )
+        direction: float | str = (
+            csv_tracking.direction if csv_tracking.direction is not None else "NA"
+        )
+        event: float | str = (
+            csv_tracking.event if csv_tracking.event is not None else "NA"
+        )
 
         result: Dict[str, Any] = {
             "gameId": csv_tracking.game_id,
@@ -31,7 +45,7 @@ class TestCSVTrackingSchema(unittest.TestCase):
             "dis": csv_tracking.distance,
             "o": orientation,
             "dir": direction,
-            "event": event
+            "event": event,
         }
 
         return result
@@ -54,7 +68,7 @@ class TestCSVTrackingSchema(unittest.TestCase):
             distance=0.09,
             orientation=230.1,
             direction=141.6,
-            event="tackle"
+            event="tackle",
         )
 
         tracking_dict: Dict[str, Any] = self._create_csv_tracking_dict(tracking)
@@ -63,7 +77,7 @@ class TestCSVTrackingSchema(unittest.TestCase):
         result = schema.load(tracking_dict)
 
         assert result == tracking
-    
+
     def test__tracking_schema__handles_na_player_id(self):
         tracking = CSVTracking(
             game_id=89,
@@ -82,7 +96,7 @@ class TestCSVTrackingSchema(unittest.TestCase):
             distance=0.09,
             orientation=230.1,
             direction=141.6,
-            event="tackle"
+            event="tackle",
         )
 
         tracking_dict: Dict[str, Any] = self._create_csv_tracking_dict(tracking)
@@ -91,7 +105,7 @@ class TestCSVTrackingSchema(unittest.TestCase):
         result = schema.load(tracking_dict)
 
         assert result == tracking
-    
+
     def test__tracking_schema__handles_na_jersey_number(self):
         tracking = CSVTracking(
             game_id=89,
@@ -110,7 +124,7 @@ class TestCSVTrackingSchema(unittest.TestCase):
             distance=0.09,
             orientation=230.1,
             direction=141.6,
-            event="tackle"
+            event="tackle",
         )
 
         tracking_dict: Dict[str, Any] = self._create_csv_tracking_dict(tracking)
@@ -119,7 +133,7 @@ class TestCSVTrackingSchema(unittest.TestCase):
         result = schema.load(tracking_dict)
 
         assert result == tracking
-    
+
     def test__tracking_schema__handles_na_orientation(self):
         tracking = CSVTracking(
             game_id=89,
@@ -138,7 +152,7 @@ class TestCSVTrackingSchema(unittest.TestCase):
             distance=0.09,
             orientation=None,
             direction=141.6,
-            event="tackle"
+            event="tackle",
         )
 
         tracking_dict: Dict[str, Any] = self._create_csv_tracking_dict(tracking)
@@ -147,7 +161,7 @@ class TestCSVTrackingSchema(unittest.TestCase):
         result = schema.load(tracking_dict)
 
         assert result == tracking
-    
+
     def test__tracking_schema__handles_na_direction(self):
         tracking = CSVTracking(
             game_id=89,
@@ -166,7 +180,7 @@ class TestCSVTrackingSchema(unittest.TestCase):
             distance=0.09,
             orientation=230.1,
             direction=None,
-            event="tackle"
+            event="tackle",
         )
 
         tracking_dict: Dict[str, Any] = self._create_csv_tracking_dict(tracking)
@@ -175,7 +189,7 @@ class TestCSVTrackingSchema(unittest.TestCase):
         result = schema.load(tracking_dict)
 
         assert result == tracking
-    
+
     def test__tracking_schema__handles_na_event(self):
         tracking = CSVTracking(
             game_id=89,
@@ -194,7 +208,7 @@ class TestCSVTrackingSchema(unittest.TestCase):
             distance=0.09,
             orientation=230.1,
             direction=141.6,
-            event=None
+            event=None,
         )
 
         tracking_dict: Dict[str, Any] = self._create_csv_tracking_dict(tracking)

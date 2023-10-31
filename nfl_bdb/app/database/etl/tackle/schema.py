@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Any, Mapping
+
 from marshmallow import fields, post_load
 
 from nfl_bdb.app.database.etl.schema import GenericSchema
@@ -27,8 +28,6 @@ class CSVTackleSchema(GenericSchema[CSVTackle]):
 
     @post_load
     def _deserialize_tackle(
-        self,
-        data: Mapping[str, Any],
-        **kwargs: Mapping[str, Any]
+        self, data: Mapping[str, Any], **kwargs: Mapping[str, Any]
     ) -> CSVTackle:
         return CSVTackle(**data)

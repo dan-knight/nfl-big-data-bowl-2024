@@ -1,6 +1,7 @@
-from dataclasses import dataclass
 import datetime
+from dataclasses import dataclass
 from typing import Any, Mapping, Optional
+
 from marshmallow import fields, post_load
 
 from nfl_bdb.app.database.etl import fields as etl_fields
@@ -49,8 +50,6 @@ class CSVTrackingSchema(GenericSchema[CSVTracking]):
 
     @post_load
     def _deserialize_tracking(
-        self,
-        data: Mapping[str, Any],
-        **kwargs: Mapping[str, Any]
+        self, data: Mapping[str, Any], **kwargs: Mapping[str, Any]
     ) -> CSVTracking:
         return CSVTracking(**data)

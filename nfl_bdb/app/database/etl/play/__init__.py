@@ -7,10 +7,9 @@ from nfl_bdb.app.database.models.team import Team as DBTeam
 
 
 class PlayFactory(ETLFactory, FactoryTeamIndex):
-    def __init__(
-        self, team_index: Dict[str, DBTeam]
-    ):
+    def __init__(self, team_index: Dict[str, DBTeam]):
         self._team_index: Dict[str, DBTeam] = team_index
+
     def transform_play(self, csv_play: CSVPlay) -> DBPlay:
         game_time = self._parse_game_clock_time(csv_play.game_clock)
         los_team: DBTeam = self._get_team(csv_play.yard_line_side)
@@ -47,19 +46,19 @@ class PlayFactory(ETLFactory, FactoryTeamIndex):
             foul_1=csv_play.foul_name_1,
             foul_player_id_1=csv_play.foul_player_id_1,
             foul_2=csv_play.foul_name_2,
-            foul_player_id_2=csv_play.foul_player_id_2
+            foul_player_id_2=csv_play.foul_player_id_2,
         )
 
     def _parse_game_clock_time(self, csv_time: str) -> int:
         split_time: List[str] = csv_time.split(":")
 
-        invalid_format_error = ValueError(f"Invalid game clock format \"{csv_time}\"")
+        invalid_format_error = ValueError(f'Invalid game clock format "{csv_time}"')
         if not len(split_time) == 2:
             raise invalid_format_error
-        
+
         try:
             (minutes, seconds) = int(split_time[0]), int(split_time[1])
         except TypeError:
             raise invalid_format_error
-        
+
         return minutes * 60 + seconds

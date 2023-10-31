@@ -1,6 +1,7 @@
-from dataclasses import dataclass
 import datetime
+from dataclasses import dataclass
 from typing import Any, Mapping, Optional
+
 from marshmallow import fields, post_load
 
 from nfl_bdb.app.database.etl import fields as etl_fields
@@ -24,15 +25,14 @@ class CSVPlayerSchema(GenericSchema[CSVPlayer]):
     name = fields.String(required=True, data_key="displayName")
     height = fields.String(required=True)
     weight = fields.Integer(required=True)
-    birth_date = etl_fields.NADate(format=DATE_FORMAT, required=True, data_key="birthDate")
+    birth_date = etl_fields.NADate(
+        format=DATE_FORMAT, required=True, data_key="birthDate"
+    )
     position = fields.String(required=True)
     college_name = fields.String(required=True, data_key="collegeName")
 
     @post_load
     def _deserialize_player(
-        self,
-        data: Mapping[str, Any],
-        many: bool,
-        **kwargs: Mapping[str, Any]
+        self, data: Mapping[str, Any], many: bool, **kwargs: Mapping[str, Any]
     ) -> CSVPlayer:
         return CSVPlayer(**data)

@@ -13,7 +13,9 @@ class TrackingPoint(Base):
     __tablename__ = "tracking"
 
     tracking_id: Mapped[int] = mapped_column(primary_key=True)
-    player_id: Mapped[Optional[int]] = mapped_column(ForeignKey("players.player_id"), nullable=True)
+    player_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("players.player_id"), nullable=True
+    )
     play_id: Mapped[int] = mapped_column(ForeignKey("plays.play_id"))
     frame: Mapped[int] = mapped_column()
 
