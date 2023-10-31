@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import datetime
 from typing import Any, Mapping
 from marshmallow import fields, post_load
 
@@ -11,8 +12,8 @@ class CSVGame:
     game_id: int
     season: int
     week: int
-    game_date: str
-    game_time: str
+    game_date: datetime.date
+    game_time: datetime.time
     home_team: str
     away_team: str
     home_score: int

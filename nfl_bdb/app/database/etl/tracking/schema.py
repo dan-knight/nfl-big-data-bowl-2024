@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import datetime
 from typing import Any, Mapping, Optional
 from marshmallow import fields, post_load
 
@@ -14,8 +15,8 @@ class CSVTracking:
     player_name: str
     team: str
     frame: int
-    time: str
-    jersey_number: str
+    time: datetime.datetime
+    jersey_number: Optional[str]
     play_direction: str
     x: float
     y: float
@@ -30,20 +31,20 @@ class CSVTracking:
 class CSVTrackingSchema(GenericSchema[CSVTracking]):
     game_id = fields.Integer(required=True, data_key="gameId")
     play_id = fields.Integer(required=True, data_key="playId")
-    player_id = fields.Integer(required=True, data_key="nflId")
+    player_id = etl_fields.NAInteger(required=True, data_key="nflId")
     player_name = fields.String(required=True, data_key="displayName")
     frame = fields.Integer(required=True, data_key="frameId")
     team = fields.String(required=True, data_key="club")
-    time = fields.String(required=True)
+    time = fields.DateTime(format=etl_fields.DATETIME_FORMAT, required=True)
     jersey_number = etl_fields.NAString(required=True, data_key="jerseyNumber")
-    play_direction = fields.String(required=True)
+    play_direction = fields.String(required=True, data_key="playDirection")
     x = fields.Float(required=True)
     y = fields.Float(required=True)
     speed = fields.Float(required=True, data_key="s")
     acceleration = fields.Float(required=True, data_key="a")
     distance = fields.Float(required=True, data_key="dis")
-    orientation = fields.Float(required=True, data_key="o")
-    direction = fields.Float(required=True, data_key="dir")
+    orientation = etl_fields.NAFloat(required=True, data_key="o")
+    direction = etl_fields.NAFloat(required=True, data_key="dir")
     event = etl_fields.NAString(required=True)
 
     @post_load

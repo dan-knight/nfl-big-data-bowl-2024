@@ -2,11 +2,12 @@ from typing import Any, Mapping
 from marshmallow.fields import Field, String, Integer, Float, Date
 
 
-DATE_FORMAT: str = "%d/%m/%Y"
+DATE_FORMAT: str = "%Y-%m-%d"
 TIME_FORMAT: str = "%H:%M:%S"
+DATETIME_FORMAT: str = f"{DATE_FORMAT} {TIME_FORMAT}.%f"
 
 
-class _NAField(Field):
+class NAField(Field):
     def _deserialize(
         self,
         value: Any,
@@ -15,23 +16,23 @@ class _NAField(Field):
         **kwargs: Mapping[str, Any],
     ):
         if value == "NA":
-            value = None
+            return None
         
         return super()._deserialize(value, attr, data, **kwargs)  # pyright: ignore[reportUnknownMemberType]
            
 
 
-class NAString(_NAField, String):
+class NAString(NAField, String):
     pass
 
 
-class NAInteger(_NAField, Integer):
+class NAInteger(NAField, Integer):
     pass
  
 
-class NAFloat(_NAField, Float):
+class NAFloat(NAField, Float):
     pass
 
 
-class NADate(_NAField, Date):
+class NADate(NAField, Date):  # pyright: ignore[reportIncompatibleMethodOverride]
     pass

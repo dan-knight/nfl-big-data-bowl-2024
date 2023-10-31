@@ -1,3 +1,4 @@
+import datetime
 from dataclasses import dataclass
 from typing import Any, Mapping, Optional
 from marshmallow import fields, post_load
@@ -17,10 +18,10 @@ class CSVPlay:
     down: int
     yards_to_go: int
     possession_team: str
-    defensive_team: int
+    defensive_team: str
     yard_line_side: str
     yard_line_number: int
-    game_clock: str
+    game_clock: datetime.time
     pre_snap_home_score: int
     pre_snap_away_score: int
     pass_result: Optional[str]
@@ -61,10 +62,10 @@ class CSVPlaySchema(GenericSchema[CSVPlay]):
     game_clock = fields.Time(format="%M:%S", required=True, data_key="gameClock")
     pre_snap_home_score = fields.Integer(required=True, data_key="preSnapHomeScore")
     pre_snap_away_score = fields.Integer(required=True, data_key="preSnapVisitorScore")
-    pass_result = fields.String(data_key="passResult")
+    pass_result = fields.String(data_key="passResult", load_default=None)
     pass_length = etl_fields.NAInteger(required=True, data_key="passLength")
     penalty_yards = etl_fields.NAInteger(required=True, data_key="penaltyYards")
-    pre_penalty_play_result = fields.String(required=True, data_key="prePenaltyPlayResult")
+    pre_penalty_play_result = fields.Integer(required=True, data_key="prePenaltyPlayResult")
     play_result = fields.Integer(required=True, data_key="playResult")
     play_nullified_by_penalty = fields.Boolean(required=True, data_key="playNullifiedByPenalty")
     absolute_yard_line = fields.Integer(required=True, data_key="absoluteYardLine")
@@ -88,4 +89,5 @@ class CSVPlaySchema(GenericSchema[CSVPlay]):
         data: Mapping[str, Any],
         **kwargs: Mapping[str, Any]
     ) -> CSVPlay:
+        
         return CSVPlay(**data)

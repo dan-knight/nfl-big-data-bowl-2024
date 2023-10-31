@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import datetime
 from typing import Any, Mapping, Optional
 from marshmallow import fields, post_load
 
@@ -12,7 +13,7 @@ class CSVPlayer:
     player_id: int
     height: str
     weight: int
-    birth_date: Optional[str]
+    birth_date: Optional[datetime.date]
     name: str
     position: str
     college_name: str
