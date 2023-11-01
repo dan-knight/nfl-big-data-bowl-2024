@@ -25,8 +25,8 @@ class CSVPlayerSchema(GenericSchema[CSVPlayer]):
     name = fields.String(required=True, data_key="displayName")
     height = fields.String(required=True)
     weight = fields.Integer(required=True)
-    birth_date = etl_fields.NADate(
-        format=DATE_FORMAT, required=True, data_key="birthDate"
+    birth_date = etl_fields.NAMultiFormatDate(
+        formats=[DATE_FORMAT, "%m/%d/%Y"], required=True, data_key="birthDate"
     )
     position = fields.String(required=True)
     college_name = fields.String(required=True, data_key="collegeName")
