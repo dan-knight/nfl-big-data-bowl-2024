@@ -1,4 +1,5 @@
-from typing import Dict, List
+import datetime
+from typing import Dict
 
 from nfl_bdb.app.database.etl.factory import ETLFactory, FactoryTeamIndex
 from nfl_bdb.app.database.etl.play.schema import CSVPlay
@@ -49,16 +50,5 @@ class PlayFactory(ETLFactory, FactoryTeamIndex):
             foul_player_id_2=csv_play.foul_player_id_2,
         )
 
-    def _parse_game_clock_time(self, csv_time: str) -> int:
-        split_time: List[str] = csv_time.split(":")
-
-        invalid_format_error = ValueError(f'Invalid game clock format "{csv_time}"')
-        if not len(split_time) == 2:
-            raise invalid_format_error
-
-        try:
-            (minutes, seconds) = int(split_time[0]), int(split_time[1])
-        except TypeError:
-            raise invalid_format_error
-
-        return minutes * 60 + seconds
+    def _parse_game_clock_time(self, csv_time: datetime.time) -> int:
+        return csv_time.minute * 60 + csv_time.second

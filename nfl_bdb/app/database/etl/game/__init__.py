@@ -13,7 +13,7 @@ class GameFactory(ETLFactory, FactoryTeamIndex):
     def transform_game(self, csv_game: CSVGame) -> DBGame:
         home_team: DBTeam = self._get_team(csv_game.home_team)
         away_team: DBTeam = self._get_team(csv_game.away_team)
-        kickoff_time: datetime.date = self._parse_csv_datetime(csv_game.game_date)
+        kickoff_time: datetime.datetime = datetime.datetime.combine(csv_game.game_date, csv_game.game_time)
 
         return DBGame(
             game_id=csv_game.game_id,
