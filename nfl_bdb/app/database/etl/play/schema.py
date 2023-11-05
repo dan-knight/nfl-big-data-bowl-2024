@@ -20,7 +20,7 @@ class CSVPlay:
     yards_to_go: int
     possession_team: str
     defensive_team: str
-    yard_line_side: str
+    yard_line_side: Optional[str]
     yard_line_number: int
     game_clock: datetime.time
     pre_snap_home_score: int
@@ -33,14 +33,14 @@ class CSVPlay:
     play_nullified_by_penalty: bool
     absolute_yard_line: int
     offense_formation: str
-    defenders_in_the_box: int
+    defenders_in_the_box: Optional[int]
     pass_probability: Optional[float]
     pre_snap_home_team_win_probability: float
     pre_snap_away_team_win_probability: float
     home_team_win_probability_added: float
     away_team_win_probability_added: float
     expected_points: float
-    expected_points_added: float
+    expected_points_added: Optional[float]
     foul_name_1: Optional[str]
     foul_name_2: Optional[str]
     foul_player_id_1: Optional[int]
@@ -58,8 +58,8 @@ class CSVPlaySchema(GenericSchema[CSVPlay]):
     yards_to_go = fields.Integer(required=True, data_key="yardsToGo")
     possession_team = fields.String(required=True, data_key="possessionTeam")
     defensive_team = fields.String(required=True, data_key="defensiveTeam")
-    yard_line_side = fields.String(required=True, data_key="yardLineSide")
-    yard_line_number = fields.Integer(required=True, data_key="yardLineNumber")
+    yard_line_side = etl_fields.NAString(required=True, data_key="yardlineSide")
+    yard_line_number = fields.Integer(required=True, data_key="yardlineNumber")
     game_clock = fields.Time(format="%M:%S", required=True, data_key="gameClock")
     pre_snap_home_score = fields.Integer(required=True, data_key="preSnapHomeScore")
     pre_snap_away_score = fields.Integer(required=True, data_key="preSnapVisitorScore")
@@ -73,9 +73,9 @@ class CSVPlaySchema(GenericSchema[CSVPlay]):
     play_nullified_by_penalty = fields.Boolean(
         required=True, data_key="playNullifiedByPenalty"
     )
-    absolute_yard_line = fields.Integer(required=True, data_key="absoluteYardLine")
+    absolute_yard_line = fields.Integer(required=True, data_key="absoluteYardlineNumber")
     offense_formation = fields.String(required=True, data_key="offenseFormation")
-    defenders_in_the_box = fields.Integer(required=True, data_key="defendersInTheBox")
+    defenders_in_the_box = etl_fields.NAInteger(required=True, data_key="defendersInTheBox")
     pass_probability = etl_fields.NAFloat(required=True, data_key="passProbability")
     pre_snap_home_team_win_probability = fields.Float(
         required=True, data_key="preSnapHomeTeamWinProbability"
@@ -87,14 +87,14 @@ class CSVPlaySchema(GenericSchema[CSVPlay]):
         required=True, data_key="homeTeamWinProbabilityAdded"
     )
     away_team_win_probability_added = fields.Float(
-        required=True, data_key="visitorTeamWinProbabilityAdded"
+        required=True, data_key="visitorTeamWinProbilityAdded"
     )
     expected_points = fields.Float(required=True, data_key="expectedPoints")
-    expected_points_added = fields.Float(required=True, data_key="expectedPointsAdded")
+    expected_points_added = etl_fields.NAFloat(required=True, data_key="expectedPointsAdded")
     foul_name_1 = etl_fields.NAString(required=True, data_key="foulName1")
     foul_name_2 = etl_fields.NAString(required=True, data_key="foulName2")
-    foul_player_id_1 = etl_fields.NAInteger(required=True, data_key="foulNflId1")
-    foul_player_id_2 = etl_fields.NAInteger(required=True, data_key="foulNflId2")
+    foul_player_id_1 = etl_fields.NAInteger(required=True, data_key="foulNFLId1")
+    foul_player_id_2 = etl_fields.NAInteger(required=True, data_key="foulNFLId2")
 
     @post_load
     def _deserialize_play(

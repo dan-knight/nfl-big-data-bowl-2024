@@ -12,6 +12,7 @@ class Play(Base):
     __tablename__ = "plays"
 
     play_id: Mapped[int] = mapped_column(primary_key=True)
+    ingame_play_id: Mapped[int] = mapped_column()
     description: Mapped[str] = mapped_column()
 
     ball_carrier_id: Mapped[int] = mapped_column(ForeignKey("players.player_id"))
@@ -23,12 +24,12 @@ class Play(Base):
     offensive_team_id: Mapped[int] = mapped_column(ForeignKey("teams.team_id"))
 
     los: Mapped[int] = mapped_column()
-    los_team_id: Mapped[int] = mapped_column(ForeignKey("teams.team_id"))
+    los_team_id: Mapped[Optional[int]] = mapped_column(ForeignKey("teams.team_id"), nullable=True)
     yard_line: Mapped[int] = mapped_column()  # "absolute" yard line
 
     yards_to_go: Mapped[int] = mapped_column()
     offensive_formation: Mapped[str] = mapped_column()
-    defenders_in_box: Mapped[int] = mapped_column()
+    defenders_in_box: Mapped[int] = mapped_column(nullable=True)
 
     play_result: Mapped[int] = mapped_column()
     pre_penalty_play_result: Mapped[int] = mapped_column()
@@ -51,7 +52,7 @@ class Play(Base):
     away_win_probability_added: Mapped[float] = mapped_column()
 
     expected_points: Mapped[float] = mapped_column()
-    expected_points_added: Mapped[float] = mapped_column()
+    expected_points_added: Mapped[Optional[float]] = mapped_column(nullable=True)
 
     foul_1: Mapped[Optional[str]] = mapped_column(nullable=True)
     foul_2: Mapped[Optional[str]] = mapped_column(nullable=True)

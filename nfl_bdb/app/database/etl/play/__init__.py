@@ -1,5 +1,5 @@
 import datetime
-from typing import Dict
+from typing import List, Optional
 
 from nfl_bdb.app.database.etl.factory import ETLFactory, FactoryTeamIndex
 from nfl_bdb.app.database.etl.play.schema import CSVPlay
@@ -8,19 +8,21 @@ from nfl_bdb.app.database.models.team import Team as DBTeam
 
 
 class PlayFactory(ETLFactory, FactoryTeamIndex):
-    def __init__(self, team_index: Dict[str, DBTeam]):
-        self._team_index: Dict[str, DBTeam] = team_index
+    def __init__(self, db_teams: List[DBTeam]):
+        super().__init__(db_teams=db_teams)
 
     def transform_play(self, csv_play: CSVPlay) -> DBPlay:
         game_time = self._parse_game_clock_time(csv_play.game_clock)
-        los_team: DBTeam = self._get_team(csv_play.yard_line_side)
+        los_team: Optional[DBTeam] = (
+            self._get_team(csv_play.yard_line_side) if csv_play.yard_line_side is not None else None
+        )
 
         return DBPlay(
-            play_id=csv_play.play_id,
-            game_id=csv_play.game_id,
+            ingame_play_id=csv_play.play_id,
             description=csv_play.play_description,
             ball_carrier_id=csv_play.ball_carrier_id,
             quarter=csv_play.quarter,
+            down=csv_play.down,
             game_time=game_time,
             offensive_team_id=csv_play.possession_team,
             yard_line=csv_play.absolute_yard_line,
