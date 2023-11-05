@@ -1,5 +1,5 @@
 import datetime
-from typing import Dict, Optional
+from typing import Dict, Optional, List
 
 from nfl_bdb.app.database.models.team import Team as DBTeam
 
@@ -21,8 +21,8 @@ class ETLFactory:
 
 
 class FactoryTeamIndex:
-    def __init__(self, team_index: Dict[str, DBTeam]):
-        self._db_team_index: Dict[str, DBTeam] = team_index
+    def __init__(self, db_teams: List[DBTeam]):
+        self._db_team_index: Dict[str, DBTeam] = self._index_teams(db_teams)
 
     def _get_team(self, abbreviation: str) -> DBTeam:
         team: Optional[DBTeam] = self._db_team_index.get(abbreviation)
@@ -31,3 +31,8 @@ class FactoryTeamIndex:
             raise LookupError(f"No team found with abbreviation {abbreviation}.")
 
         return team
+    
+    def _index_teams(self, db_teams: List[DBTeam]) -> Dict[str, DBTeam]:
+        return {
+            team.abbreviation: team for team in db_teams
+        }
