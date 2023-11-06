@@ -18,6 +18,7 @@ class PlayFactory(ETLFactory, FactoryTeamIndex):
         )
 
         return DBPlay(
+            game_id=csv_play.game_id,
             ingame_play_id=csv_play.play_id,
             description=csv_play.play_description,
             ball_carrier_id=csv_play.ball_carrier_id,
