@@ -1,9 +1,9 @@
-from collections import defaultdict
 import datetime
-from typing import Dict, Optional, List
+from collections import defaultdict
+from typing import Dict, List, Optional
 
-from nfl_bdb.app.database.models.team import Team as DBTeam
 from nfl_bdb.app.database.models.play import Play as DBPlay
+from nfl_bdb.app.database.models.team import Team as DBTeam
 
 
 class ETLFactory:
@@ -33,11 +33,9 @@ class FactoryTeamIndex:
             raise LookupError(f"No team found with abbreviation {abbreviation}.")
 
         return team
-    
+
     def _index_teams(self, db_teams: List[DBTeam]) -> Dict[str, DBTeam]:
-        return {
-            team.abbreviation: team for team in db_teams
-        }
+        return {team.abbreviation: team for team in db_teams}
 
 
 class FactoryPlayIndex:
@@ -50,7 +48,7 @@ class FactoryPlayIndex:
         for play in db_plays:
             game_index: Dict[int, DBPlay] = play_index[play.game_id]
             game_index[play.ingame_play_id] = play
-        
+
         return play_index
 
     def _get_play(self, game_id: int, ingame_play_id: int) -> DBPlay:

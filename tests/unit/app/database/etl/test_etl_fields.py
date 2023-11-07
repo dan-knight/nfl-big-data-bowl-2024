@@ -4,7 +4,16 @@ from typing import Any, cast, Dict
 
 from marshmallow import Schema
 
-from nfl_bdb.app.database.etl.fields import DATE_FORMAT, DATETIME_FORMAT, MultiFormatDate, MultiFormatDateTime, NADate, NAInteger, NAMultiFormatDate, NAMultiFormatDateTime
+from nfl_bdb.app.database.etl.fields import (
+    DATE_FORMAT,
+    DATETIME_FORMAT,
+    MultiFormatDate,
+    MultiFormatDateTime,
+    NADate,
+    NAInteger,
+    NAMultiFormatDate,
+    NAMultiFormatDateTime,
+)
 
 
 class TestETLFields(unittest.TestCase):
@@ -54,7 +63,7 @@ class TestETLFields(unittest.TestCase):
         result = cast(Dict[str, Any], schema.load({key: "NA"}))
 
         assert result[key] is None
-    
+
     def test__multi_format_datetime_field__allows_valid_date(self):
         date_format: str = DATETIME_FORMAT
 
@@ -67,7 +76,7 @@ class TestETLFields(unittest.TestCase):
         result = cast(Dict[str, Any], schema.load({key: value.strftime(date_format)}))
 
         assert result[key] == value
-    
+
     def test__multi_format_datetime_field__allows_valid_second_format(self):
         date_format: str = "%m/%d/%Y %H:%M"
 
@@ -80,14 +89,13 @@ class TestETLFields(unittest.TestCase):
         result = cast(Dict[str, Any], schema.load({key: value.strftime(date_format)}))
 
         assert result[key] == value
-    
+
     def test__na_multi_format_datetime_field__allows_required_na_datetime(self):
         date_format: str = "%m/%d/%Y %H:%M"
 
         class TestSchema(Schema):
             test_value = NAMultiFormatDateTime(
-                formats=[DATETIME_FORMAT, date_format],
-                required=True
+                formats=[DATETIME_FORMAT, date_format], required=True
             )
 
         key: str = "test_value"
@@ -95,7 +103,7 @@ class TestETLFields(unittest.TestCase):
         result = cast(Dict[str, Any], schema.load({key: "NA"}))
 
         assert result[key] is None
-    
+
     def test__multi_format_date_field__allows_valid_date(self):
         date_format: str = DATE_FORMAT
 
@@ -108,7 +116,7 @@ class TestETLFields(unittest.TestCase):
         result = cast(Dict[str, Any], schema.load({key: value.strftime(date_format)}))
 
         assert result[key] == value
-    
+
     def test__multi_format_date_field__allows_valid_second_format(self):
         date_format: str = "%m/%d/%Y"
 
@@ -127,8 +135,7 @@ class TestETLFields(unittest.TestCase):
 
         class TestSchema(Schema):
             test_value = NAMultiFormatDate(
-                formats=[DATE_FORMAT, date_format],
-                required=True
+                formats=[DATE_FORMAT, date_format], required=True
             )
 
         key: str = "test_value"

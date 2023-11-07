@@ -8,7 +8,6 @@ class PlayerFactory(ETLFactory):
     def transform_player(self, csv_player: CSVPlayer) -> DBPlayer:
         height: int = self._parse_csv_height(csv_player.height)
 
-
         db_player = DBPlayer(
             player_id=csv_player.player_id,
             name=csv_player.name,
@@ -24,10 +23,10 @@ class PlayerFactory(ETLFactory):
     def _parse_csv_height(self, csv_height: str) -> int:
         split_height: List[str] = csv_height.split("-")
 
-        error_message: str = f"Invalid height format \"{csv_height}\""
+        error_message: str = f'Invalid height format "{csv_height}"'
         if len(split_height) != 2:
             raise ValueError(error_message)
-        
+
         try:
             feet: int = int(split_height[0])
             inches: int = int(split_height[1])

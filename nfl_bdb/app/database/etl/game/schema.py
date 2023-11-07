@@ -26,7 +26,9 @@ class CSVGameSchema(GenericSchema[CSVGame]):
     game_id = fields.Integer(required=True, data_key="gameId")
     season = fields.Integer(required=True)
     week = fields.Integer(required=True)
-    game_date = etl_fields.MultiFormatDate(formats=[DATE_FORMAT, "%m/%d/%Y"], required=True, data_key="gameDate")
+    game_date = etl_fields.MultiFormatDate(
+        formats=[DATE_FORMAT, "%m/%d/%Y"], required=True, data_key="gameDate"
+    )
     game_time = fields.Time(
         format=TIME_FORMAT, required=True, data_key="gameTimeEastern"
     )

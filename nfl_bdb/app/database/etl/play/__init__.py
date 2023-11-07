@@ -14,7 +14,9 @@ class PlayFactory(ETLFactory, FactoryTeamIndex):
     def transform_play(self, csv_play: CSVPlay) -> DBPlay:
         game_time = self._parse_game_clock_time(csv_play.game_clock)
         los_team: Optional[DBTeam] = (
-            self._get_team(csv_play.yard_line_side) if csv_play.yard_line_side is not None else None
+            self._get_team(csv_play.yard_line_side)
+            if csv_play.yard_line_side is not None
+            else None
         )
 
         return DBPlay(

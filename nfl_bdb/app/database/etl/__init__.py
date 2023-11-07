@@ -44,11 +44,9 @@ def import_nfl_data(data_directory_path: Path) -> List[Base]:
     tackles: List[DBTackle] = import_tackles(data_directory_path / "tackles.csv", plays)
 
     tracking_data_paths: List[Path] = get_tracking_files(data_directory_path)
-    tracking: List[DBTracking] = import_all_tracking(tracking_data_paths, plays)    
+    tracking: List[DBTracking] = import_all_tracking(tracking_data_paths, plays)
 
-    return [
-        *players, *games, *teams, *plays, *tackles, *tracking
-    ]
+    return [*players, *games, *teams, *plays, *tackles, *tracking]
 
 
 def import_players(player_data_path: Path) -> List[DBPlayer]:
@@ -61,9 +59,7 @@ def import_players(player_data_path: Path) -> List[DBPlayer]:
         csv_player: CSVPlayer = schema.load(raw_player)
         return factory.transform_player(csv_player)
 
-    db_players: List[DBPlayer] = [
-        transform(player) for player in raw_players
-    ]
+    db_players: List[DBPlayer] = [transform(player) for player in raw_players]
 
     return db_players
 
@@ -73,21 +69,18 @@ def import_games_and_teams(game_data_path: Path) -> Tuple[List[DBGame], List[DBT
 
     game_schema = CSVGameSchema()
 
-    csv_games: List[CSVGame] = [
-        game_schema.load(game) for game in raw_games
-    ]
+    csv_games: List[CSVGame] = [game_schema.load(game) for game in raw_games]
 
     def extract_team_names(games: List[CSVGame]) -> Set[str]:
         team_names: List[str] = [
             *[csv_game.home_team for csv_game in csv_games],
-            *[csv_game.away_team for csv_game in csv_games]
+            *[csv_game.away_team for csv_game in csv_games],
         ]
 
         return set(team_names)
 
     csv_teams: List[CSVTeam] = [
-        CSVTeam(abbreviation=team_name)
-        for team_name in extract_team_names(csv_games)
+        CSVTeam(abbreviation=team_name) for team_name in extract_team_names(csv_games)
     ]
 
     team_factory = TeamFactory()
@@ -117,7 +110,9 @@ def import_plays(play_data_path: Path, db_teams: List[DBTeam]) -> List[DBPlay]:
     return db_plays
 
 
-def import_tracking(tracking_data_path: Path, db_plays: List[DBPlay]) -> List[DBTracking]:
+def import_tracking(
+    tracking_data_path: Path, db_plays: List[DBPlay]
+) -> List[DBTracking]:
     raw_tracking: Iterable[RawCSV] = load_csv(tracking_data_path)
 
     tracking_schema = CSVTrackingSchema()
@@ -127,16 +122,19 @@ def import_tracking(tracking_data_path: Path, db_plays: List[DBPlay]) -> List[DB
 
     tracking_factory = TrackingFactory(db_plays)
     db_tracking: List[DBTracking] = [
-        tracking_factory.transform_tracking(csv_tracking_point) for csv_tracking_point in csv_tracking
+        tracking_factory.transform_tracking(csv_tracking_point)
+        for csv_tracking_point in csv_tracking
     ]
 
     return db_tracking
 
 
-def import_all_tracking(tracking_data_paths: List[Path], db_plays: List[DBPlay]) -> List[DBTracking]:
+def import_all_tracking(
+    tracking_data_paths: List[Path], db_plays: List[DBPlay]
+) -> List[DBTracking]:
     return [
-        tracking for result in 
-        (import_tracking(path, db_plays) for path in tracking_data_paths) 
+        tracking
+        for result in (import_tracking(path, db_plays) for path in tracking_data_paths)
         for tracking in result
     ]
 

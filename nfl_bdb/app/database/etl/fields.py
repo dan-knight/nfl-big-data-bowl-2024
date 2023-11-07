@@ -1,7 +1,7 @@
 import datetime
 from typing import Any, List, Mapping, Optional
-from marshmallow import ValidationError
 
+from marshmallow import ValidationError
 from marshmallow.fields import Date, DateTime, Field, Float, Integer, String
 
 DATE_FORMAT: str = "%Y-%m-%d"
@@ -22,7 +22,8 @@ class NAField(Field):
 
         return super()._deserialize(  # pyright: ignore[reportUnknownMemberType]
             value, attr, data, **kwargs
-        )  
+        )
+
 
 class NAString(NAField, String):
     pass
@@ -67,14 +68,13 @@ class MultiFormatDateTime(DateTime):
                 "invalid", input=value, obj_type=self.OBJ_TYPE
             )
         raise exception
-        
 
     def _try_date_format(self, value: Any, date_format: str) -> datetime.datetime:
         if not value:
             raise self.make_error(  # pyright: ignore[reportUnknownMemberType]
                 "invalid", input=value, obj_type=self.OBJ_TYPE
             )
-        
+
         func = self.DESERIALIZATION_FUNCS.get(date_format)
         try:
             if func:
@@ -86,23 +86,27 @@ class MultiFormatDateTime(DateTime):
             raise self.make_error(  # pyright: ignore[reportUnknownMemberType]
                 "invalid", input=value, obj_type=self.OBJ_TYPE
             ) from error
-    
-    
+
+
 class MultiFormatDate(MultiFormatDateTime):
     def _deserialize(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         value: Any,
         attr: str | None = None,
         data: Mapping[str, Any] | None = None,
-        **kwargs: Mapping[str, Any]
+        **kwargs: Mapping[str, Any],
     ) -> datetime.date:
         date_time: datetime.datetime = super()._deserialize(value, attr, data, **kwargs)
         return date_time.date()
 
 
-class NAMultiFormatDateTime(NAField, MultiFormatDateTime):  # pyright: ignore[reportIncompatibleMethodOverride]
-    pass        
+class NAMultiFormatDateTime(
+    NAField, MultiFormatDateTime
+):  # pyright: ignore[reportIncompatibleMethodOverride]
+    pass
 
 
-class NAMultiFormatDate(NAField, MultiFormatDate):  # pyright: ignore[reportIncompatibleMethodOverride]
+class NAMultiFormatDate(
+    NAField, MultiFormatDate
+):  # pyright: ignore[reportIncompatibleMethodOverride]
     pass

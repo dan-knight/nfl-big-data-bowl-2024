@@ -1,11 +1,12 @@
 import datetime
-from typing import TYPE_CHECKING, List
+from typing import List, TYPE_CHECKING
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from nfl_bdb.app.database.models import Base
 from nfl_bdb.app.database.models.team import Team
+
 if TYPE_CHECKING:
     from nfl_bdb.app.database.models.play import Play
 

@@ -7,7 +7,9 @@ from nfl_bdb.app.database.models.tracking import TrackingPoint as DBTracking
 
 class TrackingFactory(ETLFactory, FactoryPlayIndex):
     def transform_tracking(self, csv_tracking: CSVTracking) -> DBTracking:
-        play_id: int = self._get_play(csv_tracking.game_id, csv_tracking.play_id).play_id
+        play_id: int = self._get_play(
+            csv_tracking.game_id, csv_tracking.play_id
+        ).play_id
         direction: bool = self._parse_play_direction(csv_tracking.play_direction)
 
         return DBTracking(
@@ -39,8 +41,12 @@ class TrackingFactory(ETLFactory, FactoryPlayIndex):
 
 def get_tracking_files(data_directory_path: Path) -> List[Path]:
     tracking_filepaths = list(data_directory_path.glob("tracking_week_\\d.csv"))
-    
+
     if len(tracking_filepaths) < 1:
-        raise(FileNotFoundError(f"No tracking data files found at path \"{data_directory_path}\"."))
-    
+        raise (
+            FileNotFoundError(
+                f'No tracking data files found at path "{data_directory_path}".'
+            )
+        )
+
     return tracking_filepaths

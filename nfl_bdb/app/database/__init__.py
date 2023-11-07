@@ -12,10 +12,10 @@ from nfl_bdb.app.database.models.game import Game  # pyright: ignore[reportUnuse
 from nfl_bdb.app.database.models.play import Play  # pyright: ignore[reportUnusedImport]
 from nfl_bdb.app.database.models.tackle import (
     Tackle,  # pyright: ignore[reportUnusedImport]
-)  
+)
 from nfl_bdb.app.database.models.tracking import (
     TrackingPoint,  # pyright: ignore[reportUnusedImport]
-)  
+)
 
 
 def set_up_engine():

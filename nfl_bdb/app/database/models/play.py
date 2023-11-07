@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Optional
+from typing import Optional, TYPE_CHECKING
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -6,8 +6,9 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from nfl_bdb.app.database.models import Base
 from nfl_bdb.app.database.models.player import Player
 from nfl_bdb.app.database.models.team import Team
+
 if TYPE_CHECKING:
-        from nfl_bdb.app.database.models.game import Game
+    from nfl_bdb.app.database.models.game import Game
 
 
 class Play(Base):
@@ -27,7 +28,9 @@ class Play(Base):
     offensive_team_id: Mapped[int] = mapped_column(ForeignKey("teams.team_id"))
 
     los: Mapped[int] = mapped_column()
-    los_team_id: Mapped[Optional[int]] = mapped_column(ForeignKey("teams.team_id"), nullable=True)
+    los_team_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("teams.team_id"), nullable=True
+    )
     yard_line: Mapped[int] = mapped_column()  # "absolute" yard line
 
     yards_to_go: Mapped[int] = mapped_column()

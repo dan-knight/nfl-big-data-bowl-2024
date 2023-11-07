@@ -73,9 +73,13 @@ class CSVPlaySchema(GenericSchema[CSVPlay]):
     play_nullified_by_penalty = fields.Boolean(
         required=True, data_key="playNullifiedByPenalty"
     )
-    absolute_yard_line = fields.Integer(required=True, data_key="absoluteYardlineNumber")
+    absolute_yard_line = fields.Integer(
+        required=True, data_key="absoluteYardlineNumber"
+    )
     offense_formation = fields.String(required=True, data_key="offenseFormation")
-    defenders_in_the_box = etl_fields.NAInteger(required=True, data_key="defendersInTheBox")
+    defenders_in_the_box = etl_fields.NAInteger(
+        required=True, data_key="defendersInTheBox"
+    )
     pass_probability = etl_fields.NAFloat(required=True, data_key="passProbability")
     pre_snap_home_team_win_probability = fields.Float(
         required=True, data_key="preSnapHomeTeamWinProbability"
@@ -90,7 +94,9 @@ class CSVPlaySchema(GenericSchema[CSVPlay]):
         required=True, data_key="visitorTeamWinProbilityAdded"
     )
     expected_points = fields.Float(required=True, data_key="expectedPoints")
-    expected_points_added = etl_fields.NAFloat(required=True, data_key="expectedPointsAdded")
+    expected_points_added = etl_fields.NAFloat(
+        required=True, data_key="expectedPointsAdded"
+    )
     foul_name_1 = etl_fields.NAString(required=True, data_key="foulName1")
     foul_name_2 = etl_fields.NAString(required=True, data_key="foulName2")
     foul_player_id_1 = etl_fields.NAInteger(required=True, data_key="foulNFLId1")
