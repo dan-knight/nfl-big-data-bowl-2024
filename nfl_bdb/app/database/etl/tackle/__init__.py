@@ -1,12 +1,15 @@
-from nfl_bdb.app.database.etl.factory import ETLFactory
+from nfl_bdb.app.database.etl.factory import ETLFactory, FactoryPlayIndex
 from nfl_bdb.app.database.etl.tackle.schema import CSVTackle
 from nfl_bdb.app.database.models.tackle import Tackle as DBTackle
+from nfl_bdb.app.database.models.play import Play as DBPlay
 
 
-class TackleFactory(ETLFactory):
+class TackleFactory(ETLFactory, FactoryPlayIndex):
     def transform_tackle(self, csv_tackle: CSVTackle) -> DBTackle:
+        play: DBPlay = self._get_play(csv_tackle.game_id, csv_tackle.play_id)
+
         return DBTackle(
-            play_id=csv_tackle.play_id,
+            play=play,
             player_id=csv_tackle.player_id,
             tackled=csv_tackle.tackle,
             assist=csv_tackle.assist,
