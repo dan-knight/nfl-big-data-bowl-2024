@@ -1,4 +1,5 @@
-from typing import Dict, Optional
+from pathlib import Path
+from typing import Dict, List, Optional
 from nfl_bdb.app.database.etl.factory import ETLFactory, FactoryPlayIndex
 from nfl_bdb.app.database.etl.tracking.schema import CSVTracking
 from nfl_bdb.app.database.models.tracking import TrackingPoint as DBTracking
@@ -34,3 +35,12 @@ class TrackingFactory(ETLFactory, FactoryPlayIndex):
             raise ValueError(f'Invalid play direction "{csv_direction}"')
 
         return play_direction
+
+
+def get_tracking_files(data_directory_path: Path) -> List[Path]:
+    tracking_filepaths = list(data_directory_path.glob("tracking_week_\\d.csv"))
+    
+    if len(tracking_filepaths) < 1:
+        raise(FileNotFoundError(f"No tracking data files found at path \"{data_directory_path}\"."))
+    
+    return tracking_filepaths
