@@ -1,7 +1,9 @@
+from collections import defaultdict
 import datetime
 from typing import Dict, Optional, List
 
 from nfl_bdb.app.database.models.team import Team as DBTeam
+from nfl_bdb.app.database.models.play import Play as DBPlay
 
 
 class ETLFactory:
@@ -36,3 +38,23 @@ class FactoryTeamIndex:
         return {
             team.abbreviation: team for team in db_teams
         }
+
+
+class FactoryPlayIndex:
+    def __init__(self, db_plays: List[DBPlay]):
+        self._play_index: Dict[int, Dict[int, DBPlay]] = self._index_plays(db_plays)
+
+    def _index_plays(self, db_plays: List[DBPlay]) -> Dict[int, Dict[int, DBPlay]]:
+        play_index: Dict[int, Dict[int, DBPlay]] = defaultdict(lambda: {})
+
+        for play in db_plays:
+            game_index: Dict[int, DBPlay] = play_index[play.game_id]
+            game_index[play.ingame_play_id] = play
+        
+        return play_index
+
+    def _get_play(self, game_id: int, ingame_play_id: int) -> DBPlay:
+        try:
+            return self._play_index[game_id][ingame_play_id]
+        except IndexError:
+            raise ValueError(f"No play {ingame_play_id} found from game {game_id}")
