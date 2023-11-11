@@ -30,7 +30,7 @@ class TrackingPoint(Base):
     distance_traveled: Mapped[float] = mapped_column()
 
     timestamp: Mapped[datetime.datetime] = mapped_column()
-    jersey: Mapped[str] = mapped_column()
+    jersey: Mapped[Optional[str]] = mapped_column(nullable=True)
 
     event: Mapped[Optional[str]] = mapped_column(nullable=True)
 

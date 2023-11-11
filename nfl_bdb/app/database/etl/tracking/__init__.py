@@ -3,17 +3,18 @@ from typing import Dict, List, Optional
 from nfl_bdb.app.database.etl.factory import ETLFactory, FactoryPlayIndex
 from nfl_bdb.app.database.etl.tracking.schema import CSVTracking
 from nfl_bdb.app.database.models.tracking import TrackingPoint as DBTracking
+from nfl_bdb.app.database.models.play import Play as DBPlay
 
 
 class TrackingFactory(ETLFactory, FactoryPlayIndex):
     def transform_tracking(self, csv_tracking: CSVTracking) -> DBTracking:
-        play_id: int = self._get_play(
+        play: DBPlay = self._get_play(
             csv_tracking.game_id, csv_tracking.play_id
-        ).play_id
+        )
         direction: bool = self._parse_play_direction(csv_tracking.play_direction)
 
         return DBTracking(
-            play_id=play_id,
+            play=play,
             player_id=csv_tracking.player_id,
             frame=csv_tracking.frame,
             timestamp=csv_tracking.time,
