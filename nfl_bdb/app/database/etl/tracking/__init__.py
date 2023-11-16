@@ -1,9 +1,10 @@
 from pathlib import Path
 from typing import Dict, List, Optional
+
 from nfl_bdb.app.database.etl.factory import ETLFactory, FactoryPlayIndex
 from nfl_bdb.app.database.etl.tracking.schema import CSVTracking
-from nfl_bdb.app.database.models.tracking import TrackingPoint as DBTracking
 from nfl_bdb.app.database.models.play import Play as DBPlay
+from nfl_bdb.app.database.models.tracking import TrackingPoint as DBTracking
 
 
 class TrackingFactory(ETLFactory, FactoryPlayIndex):

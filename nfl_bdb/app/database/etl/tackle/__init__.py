@@ -1,7 +1,7 @@
 from nfl_bdb.app.database.etl.factory import ETLFactory, FactoryPlayIndex
 from nfl_bdb.app.database.etl.tackle.schema import CSVTackle
-from nfl_bdb.app.database.models.tackle import Tackle as DBTackle
 from nfl_bdb.app.database.models.play import Play as DBPlay
+from nfl_bdb.app.database.models.tackle import Tackle as DBTackle
 
 
 class TackleFactory(ETLFactory, FactoryPlayIndex):

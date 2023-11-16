@@ -1,5 +1,6 @@
 import datetime
 from typing import List
+
 from nfl_bdb.app.database.etl.factory import ETLFactory, FactoryTeamIndex
 from nfl_bdb.app.database.etl.game.schema import CSVGame
 from nfl_bdb.app.database.models.game import Game as DBGame

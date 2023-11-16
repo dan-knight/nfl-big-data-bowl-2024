@@ -1,4 +1,5 @@
 from typing import List
+
 from nfl_bdb.app.database.etl.factory import ETLFactory
 from nfl_bdb.app.database.etl.player.schema import CSVPlayer
 from nfl_bdb.app.database.models.player import Player as DBPlayer

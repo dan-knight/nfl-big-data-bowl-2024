@@ -1,6 +1,7 @@
 import csv
 from pathlib import Path
 from typing import Dict, Iterable, List, Set, Tuple
+
 from nfl_bdb.app.database.etl.game import GameFactory
 from nfl_bdb.app.database.etl.game.schema import CSVGame, CSVGameSchema
 from nfl_bdb.app.database.etl.play import PlayFactory
@@ -13,15 +14,13 @@ from nfl_bdb.app.database.etl.team import TeamFactory
 from nfl_bdb.app.database.etl.team.schema import CSVTeam
 from nfl_bdb.app.database.etl.tracking import TrackingFactory, get_tracking_files
 from nfl_bdb.app.database.etl.tracking.schema import CSVTracking, CSVTrackingSchema
-
 from nfl_bdb.app.database.models import Base
-from nfl_bdb.app.database.models.player import Player as DBPlayer
 from nfl_bdb.app.database.models.game import Game as DBGame
-from nfl_bdb.app.database.models.team import Team as DBTeam
 from nfl_bdb.app.database.models.play import Play as DBPlay
-from nfl_bdb.app.database.models.tracking import TrackingPoint as DBTracking
+from nfl_bdb.app.database.models.player import Player as DBPlayer
 from nfl_bdb.app.database.models.tackle import Tackle as DBTackle
-
+from nfl_bdb.app.database.models.team import Team as DBTeam
+from nfl_bdb.app.database.models.tracking import TrackingPoint as DBTracking
 
 RawCSV = Dict[str, str]
 
