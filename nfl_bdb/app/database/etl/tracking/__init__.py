@@ -8,9 +8,7 @@ from nfl_bdb.app.database.models.play import Play as DBPlay
 
 class TrackingFactory(ETLFactory, FactoryPlayIndex):
     def transform_tracking(self, csv_tracking: CSVTracking) -> DBTracking:
-        play: DBPlay = self._get_play(
-            csv_tracking.game_id, csv_tracking.play_id
-        )
+        play: DBPlay = self._get_play(csv_tracking.game_id, csv_tracking.play_id)
         direction: bool = self._parse_play_direction(csv_tracking.play_direction)
 
         return DBTracking(

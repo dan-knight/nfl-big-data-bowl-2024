@@ -8,9 +8,7 @@ from nfl_bdb.app.database.etl.player.schema import CSVPlayer, CSVPlayerSchema
 
 class TestCSVPlayerSchema(unittest.TestCase):
     def _create_csv_player_dict(
-        self,
-        csv_player: CSVPlayer,
-        date_format: str = DATE_FORMAT
+        self, csv_player: CSVPlayer, date_format: str = DATE_FORMAT
     ) -> Dict[str, Any]:
         birth_date: str = (
             csv_player.birth_date.strftime(date_format)
@@ -65,7 +63,7 @@ class TestCSVPlayerSchema(unittest.TestCase):
         result = schema.load(player_dict)
 
         assert result == player
-    
+
     def test__player_schema__handles_alternate_date_format(self):
         player = CSVPlayer(
             player_id=10,
@@ -77,7 +75,9 @@ class TestCSVPlayerSchema(unittest.TestCase):
             college_name="College",
         )
 
-        player_dict: Dict[str, Any] = self._create_csv_player_dict(player, date_format="%m/%d/%Y")
+        player_dict: Dict[str, Any] = self._create_csv_player_dict(
+            player, date_format="%m/%d/%Y"
+        )
 
         schema = CSVPlayerSchema()
         result = schema.load(player_dict)

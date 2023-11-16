@@ -18,13 +18,17 @@ class TestCSVPlaySchema(unittest.TestCase):
             csv_play.penalty_yards if csv_play.penalty_yards is not None else "NA"
         )
         defenders: str | int = (
-            csv_play.defenders_in_the_box if csv_play.defenders_in_the_box is not None else "NA"
+            csv_play.defenders_in_the_box
+            if csv_play.defenders_in_the_box is not None
+            else "NA"
         )
         pass_probability: str | float = (
             csv_play.pass_probability if csv_play.pass_probability is not None else "NA"
         )
         expected_points_added: str | float = (
-            csv_play.expected_points_added if csv_play.expected_points_added is not None else "NA"
+            csv_play.expected_points_added
+            if csv_play.expected_points_added is not None
+            else "NA"
         )
         foul_name_1: str = (
             csv_play.foul_name_1 if csv_play.foul_name_1 is not None else "NA"

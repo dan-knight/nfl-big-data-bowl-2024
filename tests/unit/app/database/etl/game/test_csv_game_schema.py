@@ -8,9 +8,7 @@ from nfl_bdb.app.database.etl.game.schema import CSVGame, CSVGameSchema
 
 class TestCSVGameSchema(unittest.TestCase):
     def _create_csv_game_dict(
-        self,
-        csv_game: CSVGame,
-        date_format: str = DATE_FORMAT
+        self, csv_game: CSVGame, date_format: str = DATE_FORMAT
     ) -> Dict[str, Any]:
         game_date: str = csv_game.game_date.strftime(date_format)
         game_time: str = csv_game.game_time.strftime(TIME_FORMAT)
@@ -48,7 +46,7 @@ class TestCSVGameSchema(unittest.TestCase):
         result = schema.load(game_dict)
 
         assert result == game
-    
+
     def test__game_schema__handles_alternate_date_format(self):
         game = CSVGame(
             game_id=10,
@@ -62,7 +60,9 @@ class TestCSVGameSchema(unittest.TestCase):
             away_score=17,
         )
 
-        game_dict: Dict[str, Any] = self._create_csv_game_dict(game, date_format="%m/%d/%Y")
+        game_dict: Dict[str, Any] = self._create_csv_game_dict(
+            game, date_format="%m/%d/%Y"
+        )
 
         schema = CSVGameSchema()
         result = schema.load(game_dict)
