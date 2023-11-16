@@ -1,5 +1,6 @@
-from typing import (Any, Generic, Iterable, Mapping, Optional, TYPE_CHECKING,
-                    TypeVar)
+from typing import (
+    Any, Generic, Iterable, Mapping, Optional, TYPE_CHECKING, TypeVar
+)
 
 from marshmallow import Schema, types
 

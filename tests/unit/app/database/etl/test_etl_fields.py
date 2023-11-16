@@ -4,11 +4,14 @@ from typing import Any, cast, Dict
 
 from marshmallow import Schema
 
-from nfl_bdb.app.database.etl.fields import (DATE_FORMAT, DATETIME_FORMAT,
-                                             MultiFormatDate,
-                                             MultiFormatDateTime, NADate,
-                                             NAInteger, NAMultiFormatDate,
-                                             NAMultiFormatDateTime)
+from nfl_bdb.app.database.etl.fields import (
+    DATE_FORMAT, 
+    DATETIME_FORMAT,
+    MultiFormatDate,
+    MultiFormatDateTime, NADate,
+    NAInteger, NAMultiFormatDate,
+    NAMultiFormatDateTime
+)
 
 
 class TestETLFields(unittest.TestCase):

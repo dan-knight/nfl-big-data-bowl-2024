@@ -3,8 +3,10 @@ import unittest
 from typing import Any, Dict
 
 from nfl_bdb.app.database.etl.fields import DATETIME_FORMAT
-from nfl_bdb.app.database.etl.tracking.schema import (CSVTracking,
-                                                      CSVTrackingSchema)
+from nfl_bdb.app.database.etl.tracking.schema import (
+    CSVTracking,
+    CSVTrackingSchema
+)
 
 
 class TestCSVTrackingSchema(unittest.TestCase):
