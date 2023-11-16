@@ -41,7 +41,7 @@ class TrackingFactory(ETLFactory, FactoryPlayIndex):
 
 
 def get_tracking_files(data_directory_path: Path) -> List[Path]:
-    tracking_filepaths = list(data_directory_path.glob("tracking_week_\\d.csv"))
+    tracking_filepaths = list(data_directory_path.glob("tracking_week_*.csv"))
 
     if len(tracking_filepaths) < 1:
         raise (
