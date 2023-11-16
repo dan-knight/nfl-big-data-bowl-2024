@@ -14,5 +14,5 @@ class Player(Base):
     position: Mapped[str] = mapped_column()
     height: Mapped[int] = mapped_column()
     weight: Mapped[int] = mapped_column()
-    birth_date: Mapped[datetime.date] = mapped_column()
-    college: Mapped[Optional[str]] = mapped_column(nullable=True)
+    birth_date: Mapped[Optional[datetime.date]] = mapped_column(nullable=True)
+    college: Mapped[str] = mapped_column()

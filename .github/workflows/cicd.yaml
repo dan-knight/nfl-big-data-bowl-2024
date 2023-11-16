@@ -23,4 +23,4 @@ jobs:
       - name: Check Python style
         run: black --check nfl_bdb tests
       - name: Check Python import order
-        run: isort --check-only -rc nfl_bdb tests
+        run: isort --check-only nfl_bdb tests

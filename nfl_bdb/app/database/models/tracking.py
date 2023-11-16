@@ -13,7 +13,9 @@ class TrackingPoint(Base):
     __tablename__ = "tracking"
 
     tracking_id: Mapped[int] = mapped_column(primary_key=True)
-    player_id: Mapped[int] = mapped_column(ForeignKey("players.player_id"))
+    player_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("players.player_id"), nullable=True
+    )
     play_id: Mapped[int] = mapped_column(ForeignKey("plays.play_id"))
     frame: Mapped[int] = mapped_column()
 
@@ -22,15 +24,15 @@ class TrackingPoint(Base):
 
     speed: Mapped[float] = mapped_column()
     acceleration: Mapped[float] = mapped_column()
-    direction: Mapped[float] = mapped_column()
-    orientation: Mapped[float] = mapped_column()
+    direction: Mapped[Optional[float]] = mapped_column(nullable=True)
+    orientation: Mapped[Optional[float]] = mapped_column(nullable=True)
 
     distance_traveled: Mapped[float] = mapped_column()
 
     timestamp: Mapped[datetime.datetime] = mapped_column()
-    jersey: Mapped[int] = mapped_column()
+    jersey: Mapped[Optional[str]] = mapped_column(nullable=True)
 
     event: Mapped[Optional[str]] = mapped_column(nullable=True)
 
-    player: Mapped[Player] = relationship()
+    player: Mapped[Optional[Player]] = relationship()
     play: Mapped[Play] = relationship()

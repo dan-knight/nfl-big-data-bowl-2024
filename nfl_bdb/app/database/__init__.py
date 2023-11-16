@@ -1,21 +1,22 @@
 from os import getenv
 from typing import Optional
+
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
-from nfl_bdb.app.database.models import Base  # pyright: ignore[reportUnusedImport]
-from nfl_bdb.app.database.models.player import (
-    Player,
-)  # pyright: ignore[reportUnusedImport]
-from nfl_bdb.app.database.models.team import Team  # pyright: ignore[reportUnusedImport]
+from nfl_bdb.app.database.models import Base
 from nfl_bdb.app.database.models.game import Game  # pyright: ignore[reportUnusedImport]
 from nfl_bdb.app.database.models.play import Play  # pyright: ignore[reportUnusedImport]
+from nfl_bdb.app.database.models.player import (
+    Player,  # pyright: ignore[reportUnusedImport]
+)
 from nfl_bdb.app.database.models.tackle import (
-    Tackle,
-)  # pyright: ignore[reportUnusedImport]
+    Tackle,  # pyright: ignore[reportUnusedImport]
+)
+from nfl_bdb.app.database.models.team import Team  # pyright: ignore[reportUnusedImport]
 from nfl_bdb.app.database.models.tracking import (
-    TrackingPoint,
-)  # pyright: ignore[reportUnusedImport]
+    TrackingPoint,  # pyright: ignore[reportUnusedImport]
+)
 
 
 def set_up_engine():
