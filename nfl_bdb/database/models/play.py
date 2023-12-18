@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Optional
 
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from nfl_bdb.database.models import Base
@@ -81,3 +81,5 @@ class Play(Base):
 
     offensive_team: Mapped[Team] = relationship(Team, foreign_keys=[offensive_team_id])
     los_team: Mapped[Team] = relationship(Team, foreign_keys=[los_team_id])
+
+    __table_args__ = UniqueConstraint("game_id", "ingame_play_id", name="plays_UQ1"),
