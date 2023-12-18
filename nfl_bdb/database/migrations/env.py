@@ -1,9 +1,9 @@
 from logging.config import fileConfig
 
-from sqlalchemy import Engine
-from nfl_bdb.database import engine, get_db_uri
-
 from alembic import context
+from sqlalchemy import Engine
+
+from nfl_bdb.database import engine, get_db_uri
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

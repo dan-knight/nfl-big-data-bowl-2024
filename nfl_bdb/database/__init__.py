@@ -7,12 +7,8 @@ from sqlalchemy import create_engine
 from nfl_bdb.database.models import Base
 from nfl_bdb.database.models.game import Game  # pyright: ignore[reportUnusedImport]
 from nfl_bdb.database.models.play import Play  # pyright: ignore[reportUnusedImport]
-from nfl_bdb.database.models.player import (
-    Player,  # pyright: ignore[reportUnusedImport]
-)
-from nfl_bdb.database.models.tackle import (
-    Tackle,  # pyright: ignore[reportUnusedImport]
-)
+from nfl_bdb.database.models.player import Player  # pyright: ignore[reportUnusedImport]
+from nfl_bdb.database.models.tackle import Tackle  # pyright: ignore[reportUnusedImport]
 from nfl_bdb.database.models.team import Team  # pyright: ignore[reportUnusedImport]
 from nfl_bdb.database.models.tracking import (
     TrackingPoint,  # pyright: ignore[reportUnusedImport]
