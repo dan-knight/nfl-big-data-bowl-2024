@@ -31,7 +31,7 @@ def get_db_uri() -> str:
     database_uri: Optional[str] = getenv(DB_URI_ENVVAR)
     if database_uri is None:
         raise EnvironmentError(f'No environment variable "{DB_URI_ENVVAR}" found.')
-    
+
     return database_uri
 
 
