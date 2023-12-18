@@ -20,15 +20,19 @@ from nfl_bdb.database.models.tracking import (
 
 
 def set_up_engine():
+    engine = create_engine(get_db_uri())
+    return engine
+
+
+def get_db_uri() -> str:
     load_dotenv()
 
     DB_URI_ENVVAR: str = "DATABASE_URI"
     database_uri: Optional[str] = getenv(DB_URI_ENVVAR)
     if database_uri is None:
         raise EnvironmentError(f'No environment variable "{DB_URI_ENVVAR}" found.')
-
-    engine = create_engine(database_uri)
-    return engine
+    
+    return database_uri
 
 
 engine = set_up_engine()

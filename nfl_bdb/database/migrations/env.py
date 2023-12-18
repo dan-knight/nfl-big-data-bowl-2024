@@ -1,7 +1,7 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from sqlalchemy import Engine
+from nfl_bdb.database import engine, get_db_uri
 
 from alembic import context
 
@@ -16,9 +16,8 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
-target_metadata = None
+from nfl_bdb.database import Base
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -38,8 +37,8 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
-    context.configure(
+    url: str = get_db_uri()
+    context.configure(  # pyright: ignore[reportUnknownMemberType]
         url=url,
         target_metadata=target_metadata,
         literal_binds=True,
@@ -57,14 +56,10 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section, {}),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
+    connectable: Engine = engine
 
     with connectable.connect() as connection:
-        context.configure(
+        context.configure(  # pyright: ignore[reportUnknownMemberType]
             connection=connection, target_metadata=target_metadata
         )
 
