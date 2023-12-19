@@ -18,6 +18,7 @@ class PlayFactory(ETLFactory, FactoryTeamIndex):
             if csv_play.yard_line_side is not None
             else None
         )
+        offensive_team: DBTeam = self._get_team(csv_play.possession_team)
 
         return DBPlay(
             game_id=csv_play.game_id,
@@ -27,7 +28,7 @@ class PlayFactory(ETLFactory, FactoryTeamIndex):
             quarter=csv_play.quarter,
             down=csv_play.down,
             game_time=game_time,
-            offensive_team_id=csv_play.possession_team,
+            offensive_team=offensive_team,
             yard_line=csv_play.absolute_yard_line,
             los=csv_play.yard_line_number,
             los_team=los_team,
