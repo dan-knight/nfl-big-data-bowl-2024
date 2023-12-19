@@ -82,4 +82,4 @@ class Play(Base):
     offensive_team: Mapped[Team] = relationship(Team, foreign_keys=[offensive_team_id])
     los_team: Mapped[Team] = relationship(Team, foreign_keys=[los_team_id])
 
-    __table_args__ = UniqueConstraint("game_id", "ingame_play_id", name="plays_UQ1"),
+    __table_args__ = (UniqueConstraint("game_id", "ingame_play_id", name="plays_UQ1"),)

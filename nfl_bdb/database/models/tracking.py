@@ -36,5 +36,7 @@ class TrackingPoint(Base):
 
     player: Mapped[Optional[Player]] = relationship()
     play: Mapped[Play] = relationship()
-    
-    __table_args__ = UniqueConstraint("play_id", "player_id", "frame", name="tracking_UQ1"),
+
+    __table_args__ = (
+        UniqueConstraint("play_id", "player_id", "frame", name="tracking_UQ1"),
+    )

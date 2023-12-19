@@ -25,4 +25,4 @@ class Tackle(Base):
     play: Mapped["Play"] = relationship()
     player: Mapped["Player"] = relationship()
 
-    __table_args__ = UniqueConstraint("play_id", "player_id", name="tackles_UQ1"),
+    __table_args__ = (UniqueConstraint("play_id", "player_id", name="tackles_UQ1"),)
