@@ -24,7 +24,7 @@ class TrackingPoint(Base):
 
     speed: Mapped[float] = mapped_column()
     acceleration: Mapped[float] = mapped_column()
-    direction: Mapped[Optional[float]] = mapped_column(nullable=True)
+    direction: Mapped[bool] = mapped_column()
     orientation: Mapped[Optional[float]] = mapped_column(nullable=True)
 
     distance_traveled: Mapped[float] = mapped_column()

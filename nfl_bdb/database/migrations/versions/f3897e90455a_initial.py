@@ -145,7 +145,7 @@ def upgrade() -> None:
         sa.Column("y", sa.Float(), nullable=False),
         sa.Column("speed", sa.Float(), nullable=False),
         sa.Column("acceleration", sa.Float(), nullable=False),
-        sa.Column("direction", sa.Float(), nullable=True),
+        sa.Column("direction", sa.Boolean(), nullable=False),
         sa.Column("orientation", sa.Float(), nullable=True),
         sa.Column("distance_traveled", sa.Float(), nullable=False),
         sa.Column("timestamp", sa.DateTime(), nullable=False),
