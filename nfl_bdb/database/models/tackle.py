@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from nfl_bdb.database.models import Base
@@ -24,3 +24,5 @@ class Tackle(Base):
 
     play: Mapped["Play"] = relationship()
     player: Mapped["Player"] = relationship()
+
+    __table_args__ = (UniqueConstraint("play_id", "player_id", name="tackles_UQ1"),)

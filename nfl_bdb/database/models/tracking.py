@@ -1,7 +1,7 @@
 import datetime
 from typing import Optional
 
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from nfl_bdb.database.models import Base
@@ -16,7 +16,7 @@ class TrackingPoint(Base):
     player_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("players.player_id"), nullable=True
     )
-    play_id: Mapped[int] = mapped_column(ForeignKey("plays.play_id"))
+    play_id: Mapped[int] = mapped_column(ForeignKey("plays.play_id"), index=True)
     frame: Mapped[int] = mapped_column()
 
     x: Mapped[float] = mapped_column()
@@ -36,3 +36,7 @@ class TrackingPoint(Base):
 
     player: Mapped[Optional[Player]] = relationship()
     play: Mapped[Play] = relationship()
+
+    __table_args__ = (
+        UniqueConstraint("play_id", "player_id", "frame", name="tracking_UQ1"),
+    )
