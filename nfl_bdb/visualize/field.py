@@ -9,16 +9,19 @@ def setup_field(ax: Axes):
     ax.set_xticks([])
     ax.set_yticks([])
 
-    ax.plot([0, 120], [0, 0], c="white")
-    ax.plot([0, 120], [53.5, 53.3], c="white")
+    z: int = 0
+
+    ax.plot([0, 120], [0, 0], c="white", zorder=z)
+    ax.plot([0, 120], [53.5, 53.3], c="white", zorder=z)
 
     ax.add_collection(PatchCollection(
         [
             Rectangle((i, 0), width=10, height=53.3)
             for i in (0, 110)
         ],
-        facecolor="white"
+        facecolor="white",
+        zorder=z
     ))
 
     for i in range(0, 121, 10):
-        ax.plot([i, i], [0, 53.3], c="white")
+        ax.plot([i, i], [0, 53.3], c="white", zorder=z)
