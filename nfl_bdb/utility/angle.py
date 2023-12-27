@@ -1,53 +1,23 @@
-from math import pi, radians, cos, sin
+# pyright: reportUnknownArgumentType=false, reportUnknownMemberType=false
+import numpy as np
+import pandas as pd
+from math import pi
 
 
-from math import pi, radians, cos, sin
-from typing import Tuple
-
-
-Point = Tuple[float, float]
-
-
-def circle_point(
-    center: Point,
-    radius: float,
-    angle: float
-) -> Point:
+def circle_point(data: pd.DataFrame) -> pd.DataFrame:
     """
     Calculate the coordinates of a point on a circle.
 
     Given the radius, center coordinates, and an angle in degrees measured clockwise
     from the 12 o'clock position, this function computes the coordinates (x, y) of
     the point on the circle.
-
-    Parameters:
-    - radius (float): The radius of the circle.
-    - center (tuple): A tuple (cx, cy) representing the center coordinates of the circle.
-    - angle (float): The angle in degrees measured clockwise from 12 o'clock.
-
-    Returns:
-    tuple: A tuple (x, y) representing the coordinates of the point on the circle.
-
-    Example:
-    >>> calculate_point_on_circle(5, (0, 0), 90)
-    (0, 5)
-
-    Note:
-    - The angle is measured in degrees, and 0 degrees corresponds to the 12 o'clock
-      position. The angle increases clockwise.
-    - The center parameter should be a tuple with two elements representing x and y
-      coordinates, respectively.
-
-    Raises:
-    - ValueError: If the radius is negative.
-    - ValueError: If the angle is not a valid number.
     """
-    if radius < 0:
-        raise ValueError("Radius must be non-negative.")
+    result = pd.DataFrame(index=data.index)
+    result["modified_angle"] = -1 * (np.deg2rad(data["angle"]) - pi * 0.5)
+    
+    result = pd.DataFrame({
+        "x": data["x"] + data["length"] * np.cos(result["modified_angle"]),
+        "y": data["y"] + data["length"] * np.sin(result["modified_angle"])
+    })
 
-    center_x, center_y = center
-    modified_angle: float = -1 * (radians(angle) - pi * 0.5)
-    x: float = center_x + radius * cos(modified_angle)
-    y: float = center_y + radius * sin(modified_angle)
-
-    return x, y
+    return result[["x", "y"]]
