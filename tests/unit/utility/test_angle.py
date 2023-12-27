@@ -1,41 +1,54 @@
 import unittest
+from numpy.testing import assert_allclose
 
-from nfl_bdb.utility.angle import calculate_dx, calculate_dy
+
+from nfl_bdb.utility.angle import circle_point, Point
 
 
 class TestAngleUtilities(unittest.TestCase):
-    def test__calculate_dx__handles_valid_angle(self):
+    def assert_coords_equal(self, a: Point, b: Point):
+        assert_allclose(a, b, atol=0.001)
+
+    def test__circle_point__handles_positive_x(self):
+        center: Point = (0, 0)
+        center_x, center_y = center
         radius: float = 1
         angle: float = 90
 
-        result: float = calculate_dx(angle=angle, radius=radius)
-        expected_result: float = radius
+        result: Point = circle_point(center=center, angle=angle, radius=radius)
+        expected_result: Point = (center_x + radius, center_y)
 
-        self.assertAlmostEqual(result, expected_result)
+        self.assert_coords_equal(result, expected_result)
     
-    def test__calculate_dx__handles_negative_result(self):
+    def test__circle_point__handles_negative_x_result(self):
+        center: Point = (0, 0)
+        center_x, center_y = center
         radius: float = 3
         angle: float = 270
 
-        result: float = calculate_dx(angle=angle, radius=radius)
-        expected_result: float = -1 * radius
+        result: Point = circle_point(center=center, angle=angle, radius=radius)
+        expected_result: Point = (center_x - radius, center_y)
 
-        self.assertAlmostEqual(result, expected_result)
+        self.assert_coords_equal(result, expected_result)
     
-    def test__calculate_dy__handles_valid_angle(self):
+    def test__center_point__handles_positive_y(self):
+        center: Point = (0, 0)
+        center_x, center_y = center
         radius: float = 2.5
         angle: float = 0
 
-        result: float = calculate_dy(angle=angle, radius=radius)
-        expected_result: float = radius
+        result: Point = circle_point(center=center, angle=angle, radius=radius)
+        expected_result: Point = (center_x, center_y + radius)
 
-        self.assertAlmostEqual(result, expected_result)
+        self.assert_coords_equal(result, expected_result)
     
-    def test__calculate_dy__handles_negative_result(self):
+    def test__circle_point__handles_negative_y_result(self):
+        center: Point = (0, 0)
+        center_x, center_y = center
         radius: float = 3
         angle: float = 180
 
-        result: float = calculate_dy(angle=angle, radius=radius)
-        expected_result: float = -1 * radius
+        result: Point = circle_point(center=center, angle=angle, radius=radius)
+        expected_result: Point = (center_x, center_y - radius)
 
-        self.assertAlmostEqual(result, expected_result)
+        self.assert_coords_equal(result, expected_result)
