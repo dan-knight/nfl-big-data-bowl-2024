@@ -7,6 +7,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from nfl_bdb.database.models import Base
 from nfl_bdb.database.models.play import Play
 from nfl_bdb.database.models.player import Player
+from nfl_bdb.database.models.team import Team
 
 
 class TrackingPoint(Base):
@@ -31,11 +32,15 @@ class TrackingPoint(Base):
 
     timestamp: Mapped[datetime.datetime] = mapped_column()
     jersey: Mapped[Optional[str]] = mapped_column(nullable=True)
+    team_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("teams.team_id"), nullable=True
+    )
 
     event: Mapped[Optional[str]] = mapped_column(nullable=True)
 
     player: Mapped[Optional[Player]] = relationship()
     play: Mapped[Play] = relationship()
+    team: Mapped[Optional[Team]] = relationship()
 
     __table_args__ = (
         UniqueConstraint("play_id", "player_id", "frame", name="tracking_UQ1"),
