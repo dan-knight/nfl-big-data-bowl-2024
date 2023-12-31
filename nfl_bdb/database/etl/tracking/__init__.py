@@ -1,16 +1,22 @@
 from pathlib import Path
 from typing import Dict, List, Optional
 
-from nfl_bdb.database.etl.factory import ETLFactory, FactoryPlayIndex
+from nfl_bdb.database.etl.factory import ETLFactory, FactoryPlayIndex, FactoryTeamIndex
 from nfl_bdb.database.etl.tracking.schema import CSVTracking
 from nfl_bdb.database.models.play import Play as DBPlay
+from nfl_bdb.database.models.team import Team as DBTeam
 from nfl_bdb.database.models.tracking import TrackingPoint as DBTracking
 
 
-class TrackingFactory(ETLFactory, FactoryPlayIndex):
+class TrackingFactory(ETLFactory, FactoryPlayIndex, FactoryTeamIndex):
     def transform_tracking(self, csv_tracking: CSVTracking) -> DBTracking:
         play: DBPlay = self._get_play(csv_tracking.game_id, csv_tracking.play_id)
         direction: bool = self._parse_play_direction(csv_tracking.play_direction)
+        team: Optional[DBTeam] = (
+            self._get_team(csv_tracking.team) 
+            if csv_tracking.team != "football" 
+            else None
+        )
 
         return DBTracking(
             play=play,
@@ -25,6 +31,7 @@ class TrackingFactory(ETLFactory, FactoryPlayIndex):
             orientation=csv_tracking.orientation,
             distance_traveled=csv_tracking.distance,
             jersey=csv_tracking.jersey_number,
+            team=team,
             event=csv_tracking.event,
         )
 
