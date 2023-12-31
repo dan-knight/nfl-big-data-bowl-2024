@@ -32,7 +32,9 @@ class TrackingPoint(Base):
 
     timestamp: Mapped[datetime.datetime] = mapped_column()
     jersey: Mapped[Optional[str]] = mapped_column(nullable=True)
-    team_id: Mapped[Optional[int]] = mapped_column(ForeignKey("teams.team_id"), nullable=True)
+    team_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("teams.team_id"), nullable=True
+    )
 
     event: Mapped[Optional[str]] = mapped_column(nullable=True)
 

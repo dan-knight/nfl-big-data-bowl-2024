@@ -13,8 +13,8 @@ class TrackingFactory(ETLFactory, FactoryPlayIndex, FactoryTeamIndex):
         play: DBPlay = self._get_play(csv_tracking.game_id, csv_tracking.play_id)
         direction: bool = self._parse_play_direction(csv_tracking.play_direction)
         team: Optional[DBTeam] = (
-            self._get_team(csv_tracking.team) 
-            if csv_tracking.team != "football" 
+            self._get_team(csv_tracking.team)
+            if csv_tracking.team != "football"
             else None
         )
 
