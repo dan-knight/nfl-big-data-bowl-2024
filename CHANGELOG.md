@@ -13,3 +13,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Database schemas for data provided by the NFL
 - Support for database migrations
 - Functions for football specific visualization
+- Helper functions to render animations in GIF and MPEG formats
