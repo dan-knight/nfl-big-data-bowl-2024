@@ -16,12 +16,9 @@ def plot_players(ax: Axes, player_data: pd.DataFrame) -> Axes:
     plot_player_points(ax, player_data)
 
     if "orientation" in player_data.columns:
-        player_data = pd.concat(
-            [player_data, _get_dx_dy(player_data)],
-            axis=1
-        )
+        player_data = pd.concat([player_data, _get_dx_dy(player_data)], axis=1)
         plot_player_orientation(ax, player_data)
-    
+
     return ax
 
 
@@ -35,10 +32,7 @@ def animate_players(fig: Figure, ax: Axes, player_data: pd.DataFrame) -> FuncAni
     scatter = plot_player_points(ax, frame_data.loc[[first_frame], ["x", "y"]])
 
     if "orientation" in frame_data.columns:
-        frame_data = pd.concat(
-            [frame_data, _get_dx_dy(frame_data)],
-            axis=1
-        )
+        frame_data = pd.concat([frame_data, _get_dx_dy(frame_data)], axis=1)
         arrows = plot_player_orientation(ax, frame_data.loc[[first_frame], :])
 
     def animate(frame: int) -> Iterable[Artist]:
@@ -56,12 +50,7 @@ def animate_players(fig: Figure, ax: Axes, player_data: pd.DataFrame) -> FuncAni
 
 
 def plot_player_points(ax: Axes, player_data: pd.DataFrame) -> PathCollection:
-    return ax.scatter(
-        player_data["x"],
-        player_data["y"],
-        c="white",
-        edgecolors="black"
-    )
+    return ax.scatter(player_data["x"], player_data["y"], c="white", edgecolors="black")
 
 
 def _get_dx_dy(player_data: pd.DataFrame) -> pd.DataFrame:
